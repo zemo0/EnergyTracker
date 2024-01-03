@@ -7,6 +7,23 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Ideje za app:
+ * Grafički prikaz potrošnje po danima, tjednima, mjesecima?
+ * Personalizirane poruke za uštedu energije
+ * Integracija s pametnim uređajima
+ * Obavjestiti o vrhuncu
+ * Pokazati potrošnju npr u količini CO2 emisije
+ * Na sve staviti lijepi CSS
+ *
+ * DASHBOARD:
+ * Home(Pokazuje se sažeta statistika i par savjeta za potrošnju)
+ * Entry(Unos podataka, obavijest kad je probijen rekord potrošnje)
+ * Stats(Dani, tjedni, mjeseci sort opcija,  količina CO2 emisije)
+ * Analiza potrošnje po uređaju(korisnik odabere uređaj i ispiše mu koliko troši u usporedbi s nečim drugim?)
+ *
+ */
+
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
