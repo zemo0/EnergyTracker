@@ -3,6 +3,6 @@ module com.energytracker {
     requires javafx.fxml;
 
 
-    opens com.energytracker to javafx.fxml;
-    exports com.energytracker;
+    opens com.javafx to javafx.fxml;
+    exports com.javafx;
 }
