@@ -15,7 +15,18 @@ public class LoginController {
     private PasswordField passwordTextField;
     public void loginButton(){
         List<Korisnik> korisnici = FileUtils.dohvatPodatakaOKorisnicima();
-        System.out.println(korisnici);
+        String usernameTextFieldText = usernameTextField.getText();
+        String passwordPasswordFieldText = passwordTextField.getText();
+        boolean areTextFieldsEqual = false;
+        for(Korisnik korisnik : korisnici){
+            if(korisnik.getUsername().equals(usernameTextFieldText) &&
+               korisnik.getPassword().equals(passwordPasswordFieldText)){
+                areTextFieldsEqual = true;
+            }
+        }
+        if(areTextFieldsEqual){
+            //open new screen batonga
+        }
     }
 
 }
