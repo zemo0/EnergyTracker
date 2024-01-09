@@ -3,9 +3,13 @@ package com.javafx;
 import com.models.Korisnik;
 import com.utils.FileUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.util.List;
 
 public class LoginController {
@@ -25,8 +29,28 @@ public class LoginController {
             }
         }
         if(areTextFieldsEqual){
-            //open new screen batonga
+            showMainScreen();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("GREŠKA KOD UNOSA");
+            alert.setHeaderText("Krivo uneseni podatci");
+            alert.setContentText("Molimo Vas da unesete ispravne podatke za ulaz u sustav.");
+            alert.showAndWait();
         }
+    }
+    public void showMainScreen() {
+        FXMLLoader fxmlLoader =
+                new FXMLLoader(HelloApplication.class.getResource(
+                        "hello-view.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 850, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HelloApplication.getStage().setScene(scene);
+        HelloApplication.getStage().show();
     }
 
 }
