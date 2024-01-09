@@ -23,7 +23,7 @@ import java.io.IOException;
  * Analiza potrošnje po uređaju(korisnik odabere uređaj i ispiše mu koliko troši u usporedbi s nečim drugim?)
  *
  * LOGIN SCREEN -
- * povezati to sa text datotekom koja sadrži sve user info i pri krivom ulogiranju izbacit error
+ * Hashirati lozinke i izbaciti exception kod krivog unosa lozinke
  *
  */
 
