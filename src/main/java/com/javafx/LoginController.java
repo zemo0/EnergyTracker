@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 public class LoginController {
     @FXML
@@ -18,7 +19,7 @@ public class LoginController {
     @FXML
     private PasswordField passwordTextField;
     public void loginButton(){
-        List<Korisnik> korisnici = FileUtils.dohvatPodatakaOKorisnicima();
+        Set<Korisnik> korisnici = FileUtils.dohvatPodatakaOKorisnicima();
         String usernameTextFieldText = usernameTextField.getText();
         String passwordPasswordFieldText = passwordTextField.getText();
         boolean areTextFieldsEqual = false;

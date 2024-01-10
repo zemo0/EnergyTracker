@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FileUtils {
-    public static List<Korisnik> dohvatPodatakaOKorisnicima(){
+    public static Set<Korisnik> dohvatPodatakaOKorisnicima(){
         String filePath = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\loginInfo.txt";
-        List<Korisnik> korisnici = new ArrayList<>();
+        Set<Korisnik> korisnici = new HashSet<>();
         String username, password;
         try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             long numberOfLines = Files.lines(Paths.get(filePath)).count();
