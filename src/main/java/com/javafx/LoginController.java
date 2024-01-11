@@ -39,6 +39,20 @@ public class LoginController {
             alert.showAndWait();
         }
     }
+    public void showCreateNewAccountScreen(){
+        FXMLLoader fxmlLoader =
+                new FXMLLoader(HelloApplication.class.getResource(
+                        "createNewAccountScreen.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 850, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HelloApplication.getStage().setScene(scene);
+        HelloApplication.getStage().show();
+    }
     public void showMainScreen() {
         FXMLLoader fxmlLoader =
                 new FXMLLoader(HelloApplication.class.getResource(
