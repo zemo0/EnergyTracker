@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Ideje za app:
@@ -34,6 +35,7 @@ public class HelloApplication extends Application {
         primaryStage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("loginScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 850, 600);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

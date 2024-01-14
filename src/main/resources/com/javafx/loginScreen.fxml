@@ -41,9 +41,9 @@
                <font>
                   <Font size="16.0" />
                </font></PasswordField>
-            <Button mnemonicParsing="false" onAction="#loginButton" prefWidth="100.0" text="Login" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <Button mnemonicParsing="false" onAction="#loginButton" prefWidth="100.0" style="-fx-background-color: #1E90FF;" text="Login" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <font>
-                  <Font size="18.0" />
+                  <Font size="15.0" />
                </font>
             </Button>
             <FontAwesomeIconView fill="WHITE" glyphName="USER" size="36" GridPane.halignment="RIGHT" GridPane.rowIndex="1">

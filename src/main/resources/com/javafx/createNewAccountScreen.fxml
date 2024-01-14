@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" style="-fx-background-color: #00539C;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.CreateNewAccountScreenController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" styleClass="createNewAccountScreenAnchorPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.CreateNewAccountScreenController">
    <children>
       <GridPane layoutX="-2.0" layoutY="-3.0" prefHeight="607.0" prefWidth="859.0">
         <columnConstraints>
@@ -33,9 +33,9 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" prefHeight="5.0" prefWidth="100.0" text="Create" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+            <Button mnemonicParsing="false" prefHeight="5.0" prefWidth="100.0" style="-fx-background-color: #1E90FF;" text="Create" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                <font>
-                  <Font size="18.0" />
+                  <Font size="16.0" />
                </font></Button>
             <Label text="Role:" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
@@ -45,7 +45,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label text="Username:" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <Label fx:id="randomText" stylesheets="@style.css" text="Username:" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="10.0" />
                </GridPane.margin>
@@ -53,7 +53,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="usernameTextField" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: white;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
@@ -66,12 +66,12 @@
                   <Insets top="10.0" />
                </GridPane.margin>
             </Label>
-            <PasswordField style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <PasswordField fx:id="passwordTextField" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: white;" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
             </PasswordField>
-            <ComboBox prefHeight="26.0" prefWidth="286.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="roleSelectorComboBox" prefHeight="26.0" prefWidth="286.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>

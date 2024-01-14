@@ -1,0 +1,9 @@
+.randomText{
+    -fx-font-size: 50px;
+    -fx-font-family: "Arial Black";
+    -fx-text-fill: black;
+}
+
+.createNewAccountScreenAnchorPane{
+    -fx-background-color: #00539C;
+}
