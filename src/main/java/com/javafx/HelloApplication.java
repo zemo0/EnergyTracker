@@ -24,7 +24,7 @@ import java.util.Objects;
  * Analiza potrošnje po uređaju(korisnik odabere uređaj i ispiše mu koliko troši u usporedbi s nečim drugim?)
  *
  * LOGIN SCREEN -
- * Hashirati lozinke i izbaciti exception kod krivog unosa lozinke
+ * Hashirati lozinke i unhashirati
  *
  */
 
