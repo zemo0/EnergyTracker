@@ -3,7 +3,7 @@ package com.models;
 public class Administrator extends Racun{
 
     public Administrator(AdministratorBuilder builder){
-        super(builder.username, builder.password);
+        super(builder.username, builder.password, "Administrator");
     }
     public static class AdministratorBuilder{
         private String username;

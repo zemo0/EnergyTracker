@@ -1,6 +1,6 @@
 package com.javafx;
 
-import com.models.Korisnik;
+import com.models.Racun;
 import com.utils.FileUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 
 public class LoginController {
@@ -19,19 +18,26 @@ public class LoginController {
     @FXML
     private PasswordField passwordTextField;
     public void loginButton(){
-        Set<Korisnik> korisnici = FileUtils.dohvatPodatakaOKorisnicima();
+        Set<Racun> racuni = FileUtils.dohvatPodatakaORacunima();
         String usernameTextFieldText = usernameTextField.getText();
         String passwordPasswordFieldText = passwordTextField.getText();
         boolean areTextFieldsEqual = false;
-        for(Korisnik korisnik : korisnici){
-            if(korisnik.getUsername().equals(usernameTextFieldText) &&
-               korisnik.getPassword().equals(passwordPasswordFieldText)){
+        for(Racun racun : racuni){
+            if (racun.getUsername().equals(usernameTextFieldText) &&
+                    racun.getPassword().equals(passwordPasswordFieldText)) {
                 areTextFieldsEqual = true;
+                break;
             }
         }
         if(areTextFieldsEqual){
             showMainScreen();
-        } else {
+        } else if(usernameTextFieldText.isEmpty() || passwordPasswordFieldText.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("GREŠKA KOD UNOSA");
+            alert.setHeaderText("Niste unijeli podatke");
+            alert.setContentText("Molimo Vas da unesete podatke za ulaz u sustav.");
+            alert.showAndWait();
+        }else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("GREŠKA KOD UNOSA");
             alert.setHeaderText("Krivo uneseni podatci");

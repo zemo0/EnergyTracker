@@ -1,6 +1,12 @@
+Administrator
 ivan
 pass
+Korisnik
 marko
 pass1!
+Korisnik
 josip
 password
+Korisnik
+tomi
+cm0102

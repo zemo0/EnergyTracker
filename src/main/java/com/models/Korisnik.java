@@ -3,7 +3,7 @@ package com.models;
 public class Korisnik extends Racun{
 
     private Korisnik(KorisnikBuilder builder){
-        super(builder.username, builder.password);
+        super(builder.username, builder.password, "Korisnik");
     }
 
     public static class KorisnikBuilder{
