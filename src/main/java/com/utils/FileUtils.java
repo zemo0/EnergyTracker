@@ -23,6 +23,7 @@ public class FileUtils {
                 role = reader.readLine();
                 username = reader.readLine();
                 password = reader.readLine();
+                password = unhashPassword(password);
                 if(role.equals("Korisnik")) {
                     Korisnik korisnik = new Korisnik.KorisnikBuilder().setUsername(username).setPassword(password).build();
                     racuni.add(korisnik);
@@ -36,5 +37,21 @@ public class FileUtils {
             e.printStackTrace();
         }
         return racuni;
+    }
+
+    public static String hashPassword(String password){
+        StringBuilder hashed = new StringBuilder();
+        for (char c : password.toCharArray()) {
+            hashed.append((char) (c + 1));  // Simple Caesar cipher shift by 1
+        }
+        return hashed.toString();
+    }
+
+    public static String unhashPassword(String password){
+        StringBuilder hashed = new StringBuilder();
+        for (char c : password.toCharArray()) {
+            hashed.append((char) (c - 1));  // Simple Caesar cipher shift by 1
+        }
+        return hashed.toString();
     }
 }

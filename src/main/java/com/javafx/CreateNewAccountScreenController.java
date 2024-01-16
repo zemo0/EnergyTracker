@@ -79,14 +79,12 @@ public class CreateNewAccountScreenController {
                     writer.newLine();
                     writer.write(racun.getUsername());
                     writer.newLine();
-                    writer.write(racun.getPassword());
+                    writer.write(FileUtils.hashPassword(racun.getPassword()));
                     writer.newLine();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-
     }
 }
