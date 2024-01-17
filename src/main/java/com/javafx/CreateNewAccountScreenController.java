@@ -7,6 +7,8 @@ import com.utils.FileUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import java.io.BufferedWriter;
@@ -86,5 +88,20 @@ public class CreateNewAccountScreenController {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void showLoginScreen(){
+        FXMLLoader fxmlLoader =
+                new FXMLLoader(HelloApplication.class.getResource(
+                        "loginScreen.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 850, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HelloApplication.getStage().setScene(scene);
+        HelloApplication.getStage().show();
     }
 }
