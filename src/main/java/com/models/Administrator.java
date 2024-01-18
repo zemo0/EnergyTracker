@@ -1,6 +1,8 @@
 package com.models;
 
-public class Administrator extends Racun{
+import java.io.Serializable;
+
+public class Administrator extends Racun implements Serializable {
 
     public Administrator(AdministratorBuilder builder){
         super(builder.username, builder.password, "Administrator");

@@ -1,6 +1,8 @@
 package com.models;
 
-public abstract class Racun {
+import java.io.Serializable;
+
+public abstract class Racun implements Serializable {
     private String username;
     private String password;
     private String role;

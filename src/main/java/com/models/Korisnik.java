@@ -1,6 +1,8 @@
 package com.models;
 
-public class Korisnik extends Racun{
+import java.io.Serializable;
+
+public class Korisnik extends Racun implements Serializable {
 
     private Korisnik(KorisnikBuilder builder){
         super(builder.username, builder.password, "Korisnik");

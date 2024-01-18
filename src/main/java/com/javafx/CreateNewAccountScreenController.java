@@ -15,6 +15,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -64,29 +65,32 @@ public class CreateNewAccountScreenController {
             alert.setHeaderText("Uspješno uneseni podatci");
             alert.setContentText("Novi račun je kreiran");
             alert.showAndWait();
+            Racun racun;
+            Set<Racun> promjene = new HashSet<>();
             if(role.equals("Korisnik")){
-                Korisnik korisnik = new Korisnik.KorisnikBuilder().setUsername(username).setPassword(password).build();
-                racuni.add(korisnik);
+                racun = new Korisnik.KorisnikBuilder().setUsername(username).setPassword(password).build();
             } else {
-                Administrator administrator = new Administrator.AdministratorBuilder().setUsername(username)
+                racun = new Administrator.AdministratorBuilder().setUsername(username)
                         .setPassword(password).build();
-                racuni.add(administrator);
             }
+            racuni.add(racun);
 
             //spremanje novog podatka kao korisnik
             String filePath = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\loginInfo.txt";
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))){
-                for(Racun racun : racuni) {
-                    writer.write(racun.getRole());
+                for(Racun out : racuni) {
+                    writer.write(out.getRole());
                     writer.newLine();
-                    writer.write(racun.getUsername());
+                    writer.write(out.getUsername());
                     writer.newLine();
-                    writer.write(FileUtils.hashPassword(racun.getPassword()));
+                    writer.write(FileUtils.hashPassword(out.getPassword()));
                     writer.newLine();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            FileUtils.serializeRacun(racun);
+            System.out.println(FileUtils.deserializeRacun());
         }
     }
 
