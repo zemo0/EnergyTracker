@@ -23,8 +23,8 @@ import java.util.Objects;
  * Stats(Dani, tjedni, mjeseci sort opcija,  količina CO2 emisije)
  * Analiza potrošnje po uređaju(korisnik odabere uređaj i ispiše mu koliko troši u usporedbi s nečim drugim?)
  *
- * serijalizacija i deserijalizacija promjena(napraviti za create account i onda nakon toga za sve ostalo.
  * custom deserialization exception klasu napravit za kad je deserijalizacija kriva
+ * Logger dodati
  */
 
 public class HelloApplication extends Application {

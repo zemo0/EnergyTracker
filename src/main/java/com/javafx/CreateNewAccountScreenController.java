@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Set;
 
 public class CreateNewAccountScreenController {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    private List<Racun> stvoreniRacuni;
     @FXML
     private ComboBox<String> roleSelectorComboBox;
     @FXML
@@ -33,6 +35,7 @@ public class CreateNewAccountScreenController {
         listOfRoles.add("Administrator");
         ObservableList<String> observableListOfRoles = FXCollections.observableArrayList(listOfRoles);
         roleSelectorComboBox.setItems(observableListOfRoles);
+        stvoreniRacuni = new ArrayList<>();
     }
 
     public void onButtonClick(){
@@ -74,7 +77,7 @@ public class CreateNewAccountScreenController {
                         .setPassword(password).build();
             }
             racuni.add(racun);
-
+            stvoreniRacuni.add(racun);
             //spremanje novog podatka kao korisnik
             String filePath = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\loginInfo.txt";
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))){
@@ -89,12 +92,12 @@ public class CreateNewAccountScreenController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            FileUtils.serializeRacun(racun);
-            System.out.println(FileUtils.deserializeRacun());
         }
     }
 
     public void showLoginScreen(){
+        FileUtils.serializePromjeneURacunima(stvoreniRacuni);
+        System.out.println(FileUtils.deserializePromjeneURacunima());
         FXMLLoader fxmlLoader =
                 new FXMLLoader(HelloApplication.class.getResource(
                         "loginScreen.fxml"));
@@ -107,5 +110,6 @@ public class CreateNewAccountScreenController {
 
         HelloApplication.getStage().setScene(scene);
         HelloApplication.getStage().show();
+
     }
 }
