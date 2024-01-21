@@ -56,16 +56,23 @@ public class FileUtils {
         return hashed.toString();
     }
 
-    public static void serializePromjeneURacunima(List<Racun> racuni){
-        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(serializationFileName))) {
-            for(Racun racun : racuni){
+    public static void serializePromjeneURacunima(List<Racun> racuni) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(serializationFileName))) {
+            for (Racun racun : racuni) {
                 out.writeObject(racun);
             }
         } catch(IOException ex){
             ex.printStackTrace();
         }
     }
-    public static List<Racun> deserializePromjeneURacunima(){
+    public static void serializeRacun(Racun racun){
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(serializationFileName))){
+            out.writeObject(racun);
+        } catch(IOException ex){
+            ex.printStackTrace();
+        }
+    }
+    public static List<Racun> deserializeRacun(){
         List<Racun> racuns = new ArrayList<>();
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(serializationFileName))) {
             while (true) {
