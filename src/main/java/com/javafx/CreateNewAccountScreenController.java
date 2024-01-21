@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 public class CreateNewAccountScreenController {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
     private List<Racun> stvoreniRacuni;
     @FXML
     private ComboBox<String> roleSelectorComboBox;
