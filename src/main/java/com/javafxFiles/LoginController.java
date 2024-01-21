@@ -1,4 +1,4 @@
-package com.javafx;
+package com.javafxFiles;
 
 import com.models.Racun;
 import com.utils.FileUtils;

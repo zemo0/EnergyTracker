@@ -1,8 +1,10 @@
 module com.energytracker {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.base;
+    requires javafx.graphics;
 
 
-    opens com.javafx to javafx.fxml;
-    exports com.javafx;
+    opens com.javafxFiles to javafx.fxml;
+    exports com.javafxFiles;
 }
