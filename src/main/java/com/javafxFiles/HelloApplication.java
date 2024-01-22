@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+import static com.mainPackage.Main.logger;
+
 /**
  * Ideje za app:
  * Grafički prikaz potrošnje po danima, tjednima, mjesecima?
@@ -23,7 +25,7 @@ import java.util.Objects;
  * Stats(Dani, tjedni, mjeseci sort opcija,  količina CO2 emisije)
  * Analiza potrošnje po uređaju(korisnik odabere uređaj i ispiše mu koliko troši u usporedbi s nečim drugim?)
  *
- * serijalizacija i deserijalizacija promjena(napraviti za create account i onda nakon toga za sve ostalo.
+ * kako trajno dodati fontawesome package?
  * custom deserialization exception klasu napravit za kad je deserijalizacija kriva
  */
 
@@ -31,6 +33,7 @@ public class HelloApplication extends Application {
     private static Stage primaryStage;
     @Override
     public void start(Stage stage) throws IOException {
+        logger.info("Program je pokrenut...");
         primaryStage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("loginScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 850, 600);

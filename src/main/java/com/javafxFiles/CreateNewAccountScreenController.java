@@ -10,7 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,9 +20,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.mainPackage.Main.logger;
+
 public class CreateNewAccountScreenController {
-    //private static final Logger logger = LoggerFactory.getLogger(Main.class);
-    private List<Racun> stvoreniRacuni;
+    public static Integer changeCounter = 0;
+    private Set<Racun> promjene = new HashSet<>();
     @FXML
     private ComboBox<String> roleSelectorComboBox;
     @FXML
@@ -68,7 +71,6 @@ public class CreateNewAccountScreenController {
             alert.setContentText("Novi račun je kreiran");
             alert.showAndWait();
             Racun racun;
-            Set<Racun> promjene = new HashSet<>();
             if(role.equals("Korisnik")){
                 racun = new Korisnik.KorisnikBuilder().setUsername(username).setPassword(password).build();
             } else {
@@ -76,7 +78,7 @@ public class CreateNewAccountScreenController {
                         .setPassword(password).build();
             }
             racuni.add(racun);
-
+            promjene.add(racun);
             //spremanje novog podatka kao korisnik
             String filePath = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\loginInfo.txt";
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))){
@@ -90,6 +92,7 @@ public class CreateNewAccountScreenController {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                //logger.info("");
             }
         }
     }
@@ -107,5 +110,8 @@ public class CreateNewAccountScreenController {
 
         HelloApplication.getStage().setScene(scene);
         HelloApplication.getStage().show();
+        FileUtils.serializeRacune(promjene);
+        changeCounter = promjene.size();
+        System.out.println(FileUtils.deserializeRacune());
     }
 }

@@ -1,9 +1,9 @@
 package com.utils;
 
+import com.javafxFiles.CreateNewAccountScreenController;
 import com.models.Administrator;
 import com.models.Korisnik;
 import com.models.Racun;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -65,17 +65,19 @@ public class FileUtils {
             ex.printStackTrace();
         }
     }
-    public static void serializeRacun(Racun racun){
+    public static void serializeRacune(Set<Racun> racuni){
         try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(serializationFileName))){
-            out.writeObject(racun);
+            for(Racun racun : racuni) {
+                out.writeObject(racun);
+            }
         } catch(IOException ex){
             ex.printStackTrace();
         }
     }
-    public static List<Racun> deserializeRacun(){
-        List<Racun> racuns = new ArrayList<>();
+    public static Set<Racun> deserializeRacune(){
+        Set<Racun> racuns = new HashSet<>();
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(serializationFileName))) {
-            while (true) {
+            for(int i = 0; i < CreateNewAccountScreenController.changeCounter; i++) {
                 Racun racun = (Racun) in.readObject();
                 racuns.add(racun);
             }
