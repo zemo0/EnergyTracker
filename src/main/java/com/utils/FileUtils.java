@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.mainPackage.Main.logger;
+
 public class FileUtils {
     public static final String serializationFileName = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\racuni.dat";
     public static Set<Racun> dohvatPodatakaORacunima(){
@@ -36,6 +38,7 @@ public class FileUtils {
             }
         }catch (IOException e) {
             e.printStackTrace();
+            logger.info("IOException kod čitanje datoteke o userima");
         }
         return racuni;
     }
@@ -55,16 +58,6 @@ public class FileUtils {
         }
         return hashed.toString();
     }
-
-    public static void serializePromjeneURacunima(List<Racun> racuni) {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(serializationFileName))) {
-            for (Racun racun : racuni) {
-                out.writeObject(racun);
-            }
-        } catch(IOException ex){
-            ex.printStackTrace();
-        }
-    }
     public static void serializeRacune(Set<Racun> racuni){
         try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(serializationFileName))){
             for(Racun racun : racuni) {
@@ -72,6 +65,7 @@ public class FileUtils {
             }
         } catch(IOException ex){
             ex.printStackTrace();
+            logger.info("IOException kod serijaliziranja novih kreiranih računa");
         }
     }
     public static Set<Racun> deserializeRacune(){
@@ -83,8 +77,10 @@ public class FileUtils {
             }
         } catch (EOFException e) {
             // End of file reached, do nothing
+            logger.info("EOFException jer je kod deserijalizacije filea kod došao do kraja filea");
         } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace(); // or log the error
+            logger.info("Kod deserijalizacije je došlo do greške pri čitanju ili nije nađena prava klasa");
         }
 
         return racuns;

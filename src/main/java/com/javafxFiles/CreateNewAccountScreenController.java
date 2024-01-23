@@ -92,7 +92,7 @@ public class CreateNewAccountScreenController {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                //logger.info("");
+                logger.info("Došlo je do greške pri zapisu novih korisnika u file");
             }
         }
     }
@@ -106,6 +106,7 @@ public class CreateNewAccountScreenController {
             scene = new Scene(fxmlLoader.load(), 850, 600);
         } catch (IOException e) {
             e.printStackTrace();
+            logger.info("Došlo je do greške pri učitavanju nove scene");
         }
 
         HelloApplication.getStage().setScene(scene);
