@@ -25,8 +25,7 @@ import static com.mainPackage.Main.logger;
  * Stats(Dani, tjedni, mjeseci sort opcija,  količina CO2 emisije)
  * Analiza potrošnje po uređaju(korisnik odabere uređaj i ispiše mu koliko troši u usporedbi s nečim drugim?)
  *
- * kako trajno dodati fontawesome package?
- * custom deserialization exception klasu napravit za kad je deserijalizacija kriva
+ * menu bar dodati, skužit što sve stavit unutra i kako ga napraviti da lijepo izgleda
  */
 
 public class HelloApplication extends Application {
