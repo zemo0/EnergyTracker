@@ -26,6 +26,7 @@ import static com.mainPackage.Main.logger;
  * Analiza potrošnje po uređaju(korisnik odabere uređaj i ispiše mu koliko troši u usporedbi s nečim drugim?)
  *
  * menu bar dodati, skužit što sve stavit unutra i kako ga napraviti da lijepo izgleda
+ * kako staviti menuBar na vrh screena?
  */
 
 public class HelloApplication extends Application {
