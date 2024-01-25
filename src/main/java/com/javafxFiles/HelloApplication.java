@@ -27,6 +27,7 @@ import static com.mainPackage.Main.logger;
  *
  * menu bar dodati, skužit što sve stavit unutra i kako ga napraviti da lijepo izgleda
  * kako staviti menuBar na vrh screena?
+ * skuziti kako persistati u svojim ciljevima
  */
 
 public class HelloApplication extends Application {
