@@ -7,3 +7,11 @@
 .createNewAccountScreenAnchorPane{
     -fx-background-color: #00539C;
 }
+
+.MenuBar{
+    -fx-background-color: #000000;
+}
+
+.Menu{
+    -fx-text-fill: #ffffff;
+}

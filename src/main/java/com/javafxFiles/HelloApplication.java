@@ -25,9 +25,7 @@ import static com.mainPackage.Main.logger;
  * Stats(Dani, tjedni, mjeseci sort opcija,  količina CO2 emisije)
  * Analiza potrošnje po uređaju(korisnik odabere uređaj i ispiše mu koliko troši u usporedbi s nečim drugim?)
  *
- * menu bar dodati, skužit što sve stavit unutra i kako ga napraviti da lijepo izgleda
- * kako staviti menuBar na vrh screena?
- * skuziti kako persistati u svojim ciljevima
+ * zajebi menubar, stavi dashboard jer je to najljepše, jebo te menu bar nemres ga nikako stilizirati
  */
 
 public class HelloApplication extends Application {
