@@ -26,6 +26,7 @@ import static com.mainPackage.Main.logger;
  * Analiza potrošnje po uređaju(korisnik odabere uređaj i ispiše mu koliko troši u usporedbi s nečim drugim?)
  *
  * zajebi menubar, stavi dashboard jer je to najljepše, jebo te menu bar nemres ga nikako stilizirati
+ * istrazivo sam kako dashboard napravit
  */
 
 public class HelloApplication extends Application {
