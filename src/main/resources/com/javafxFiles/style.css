@@ -9,9 +9,7 @@
 }
 
 .MenuBar{
-    -fx-background-color: #000000;
+    -fx-background-color: #1E90FF;
+    -fx-font-size: 14px;
 }
 
-.Menu{
-    -fx-text-fill: #ffffff;
-}

@@ -10,21 +10,22 @@
    <children>
       <MenuBar prefHeight="26.0" prefWidth="850.0" stylesheets="@style.css" AnchorPane.topAnchor="0.0">
         <menus>
-          <Menu mnemonicParsing="false" style="background-color: #000000;" text="File">
+          <Menu mnemonicParsing="false" text="Home" />
+          <Menu mnemonicParsing="false" text="Unos">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" text="Unos novog uređaja" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="Prikaz">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Analiza">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="About" />
+               </items>
+            </Menu>
         </menus>
          <styleClass>
             <String fx:value="MenuBar" />
