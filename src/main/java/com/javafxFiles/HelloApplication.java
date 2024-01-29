@@ -25,8 +25,13 @@ import static com.mainPackage.Main.logger;
  * Stats(Dani, tjedni, mjeseci sort opcija,  količina CO2 emisije)
  * Analiza potrošnje po uređaju(korisnik odabere uređaj i ispiše mu koliko troši u usporedbi s nečim drugim?)
  *
- * zajebi dashboard, nemoguće je dodati nove stvari na njega. Napravit cu menu bar al da bude dobar i implementirat
- * stvari korak po korak na njega
+ * KLASE:
+ * Mjesec potrošnje(ENUMERACIJA)
+ * Kategorija trošila
+ * Potrošnja proizvoda(ostala dve klase ukomponirane u ovu) i povezana s korisnikomq
+ * Račun(ukupni trošak i ispis svih troškova za taj mjesec
+ *
+ * svaka klasa mora bit svoj meni
  */
 
 public class HelloApplication extends Application {

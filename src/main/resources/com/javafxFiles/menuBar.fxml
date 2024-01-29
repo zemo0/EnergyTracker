@@ -13,7 +13,8 @@
           <Menu mnemonicParsing="false" text="Home" />
           <Menu mnemonicParsing="false" text="Unos">
             <items>
-              <MenuItem mnemonicParsing="false" text="Unos novog uređaja" />
+                  <MenuItem mnemonicParsing="false" text="Unos potrošnje" />
+              <MenuItem mnemonicParsing="false" onAction="#showEnterNewApplianceScreen" text="Unos uređaja" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Prikaz">
