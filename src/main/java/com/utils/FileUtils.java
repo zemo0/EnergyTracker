@@ -1,24 +1,23 @@
 package com.utils;
 
 import com.javafxFiles.CreateNewAccountScreenController;
-import com.models.Administrator;
-import com.models.Korisnik;
-import com.models.Racun;
+import com.models.Admin;
+import com.models.User;
+import com.models.Role;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static com.mainPackage.Main.logger;
 
 public class FileUtils {
     public static final String serializationFileName = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\racuni.dat";
-    public static Set<Racun> dohvatPodatakaORacunima(){
+    public static Set<Role> dohvatPodatakaORacunima(){
         String filePath = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\loginInfo.txt";
-        Set<Racun> racuni = new HashSet<>();
+        Set<Role> racuni = new HashSet<>();
         String username, password, role;
         try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             long numberOfLines = Files.lines(Paths.get(filePath)).count();
@@ -28,12 +27,12 @@ public class FileUtils {
                 password = reader.readLine();
                 password = unhashPassword(password);
                 if(role.equals("Korisnik")) {
-                    Korisnik korisnik = new Korisnik.KorisnikBuilder().setUsername(username).setPassword(password).build();
-                    racuni.add(korisnik);
+                    User user = new User.KorisnikBuilder().setUsername(username).setPassword(password).build();
+                    racuni.add(user);
                 } else {
-                    Administrator administrator = new Administrator.AdministratorBuilder().setUsername(username)
+                    Admin admin = new Admin.AdministratorBuilder().setUsername(username)
                             .setPassword(password).build();
-                    racuni.add(administrator);
+                    racuni.add(admin);
                 }
             }
         }catch (IOException e) {
@@ -58,22 +57,22 @@ public class FileUtils {
         }
         return hashed.toString();
     }
-    public static void serializeRacune(Set<Racun> racuni){
+    public static void serializeRacune(Set<Role> racuni){
         try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(serializationFileName))){
-            for(Racun racun : racuni) {
-                out.writeObject(racun);
+            for(Role role : racuni) {
+                out.writeObject(role);
             }
         } catch(IOException ex){
             ex.printStackTrace();
             logger.info("IOException kod serijaliziranja novih kreiranih računa");
         }
     }
-    public static Set<Racun> deserializeRacune(){
-        Set<Racun> racuns = new HashSet<>();
+    public static Set<Role> deserializeRacune(){
+        Set<Role> roles = new HashSet<>();
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(serializationFileName))) {
             for(int i = 0; i < CreateNewAccountScreenController.changeCounter; i++) {
-                Racun racun = (Racun) in.readObject();
-                racuns.add(racun);
+                Role role = (Role) in.readObject();
+                roles.add(role);
             }
         } catch (EOFException e) {
             // End of file reached, do nothing
@@ -83,6 +82,6 @@ public class FileUtils {
             logger.info("Kod deserijalizacije je došlo do greške pri čitanju ili nije nađena prava klasa");
         }
 
-        return racuns;
+        return roles;
     }
 }

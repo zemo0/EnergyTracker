@@ -1,8 +1,8 @@
 package com.javafxFiles;
 
-import com.models.Administrator;
-import com.models.Korisnik;
-import com.models.Racun;
+import com.models.Admin;
+import com.models.User;
+import com.models.Role;
 import com.utils.FileUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,8 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,7 +23,7 @@ import static com.mainPackage.Main.logger;
 
 public class CreateNewAccountScreenController {
     public static Integer changeCounter = 0;
-    private Set<Racun> promjene = new HashSet<>();
+    private Set<Role> promjene = new HashSet<>();
     @FXML
     private ComboBox<String> roleSelectorComboBox;
     @FXML
@@ -44,10 +43,10 @@ public class CreateNewAccountScreenController {
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
         String role = roleSelectorComboBox.getValue();
-        Set<Racun> racuni = FileUtils.dohvatPodatakaORacunima();
+        Set<Role> racuni = FileUtils.dohvatPodatakaORacunima();
         boolean areTextFieldsEqual = false;
-        for(Racun racun : racuni){
-            if (racun.getUsername().equals(username) && racun.getPassword().equals(password)) {
+        for(Role bill : racuni){
+            if (bill.getUsername().equals(username) && bill.getPassword().equals(password)) {
                 areTextFieldsEqual = true;
                 break;
             }
@@ -70,19 +69,19 @@ public class CreateNewAccountScreenController {
             alert.setHeaderText("Uspješno uneseni podatci");
             alert.setContentText("Novi račun je kreiran");
             alert.showAndWait();
-            Racun racun;
+            Role bill;
             if(role.equals("Korisnik")){
-                racun = new Korisnik.KorisnikBuilder().setUsername(username).setPassword(password).build();
+                bill = new User.KorisnikBuilder().setUsername(username).setPassword(password).build();
             } else {
-                racun = new Administrator.AdministratorBuilder().setUsername(username)
+                bill = new Admin.AdministratorBuilder().setUsername(username)
                         .setPassword(password).build();
             }
-            racuni.add(racun);
-            promjene.add(racun);
+            racuni.add(bill);
+            promjene.add(bill);
             //spremanje novog podatka kao korisnik
             String filePath = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\loginInfo.txt";
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))){
-                for(Racun out : racuni) {
+                for(Role out : racuni) {
                     writer.write(out.getRole());
                     writer.newLine();
                     writer.write(out.getUsername());

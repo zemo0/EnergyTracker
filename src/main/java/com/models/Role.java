@@ -2,12 +2,12 @@ package com.models;
 
 import java.io.Serializable;
 
-public abstract class Racun implements Serializable {
+public abstract class Role implements Serializable {
     private String username;
     private String password;
     private String role;
 
-    public Racun(String username, String password, String role){
+    public Role(String username, String password, String role){
         this.username = username;
         this.password = password;
         this.role = role;

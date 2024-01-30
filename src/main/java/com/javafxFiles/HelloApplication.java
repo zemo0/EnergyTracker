@@ -22,14 +22,14 @@ import static com.mainPackage.Main.logger;
  * DASHBOARD:
  * Home(Pokazuje se sažeta statistika i par savjeta za potrošnju)
  * Entry(Unos podataka, obavijest kad je probijen rekord potrošnje)
- * Stats(Dani, tjedni, mjeseci sort opcija,  količina CO2 emisije)
  * Analiza potrošnje po uređaju(korisnik odabere uređaj i ispiše mu koliko troši u usporedbi s nečim drugim?)
  *
  * KLASE:
  * Mjesec potrošnje(ENUMERACIJA)
- * Kategorija trošila
- * Potrošnja proizvoda(ostala dve klase ukomponirane u ovu) i povezana s korisnikomq
- * Račun(ukupni trošak i ispis svih troškova za taj mjesec
+ * Kategorija trošila(dodaj novu, izmjeni, izbrisi)
+ * Potrošnja proizvoda(ostala dve klase ukomponirane u ovu -> dodaj, izmjeni, izbrisi)
+ * Račun(ukupni trošak i ispis svih troškova za taj mjesec, samo lijepi prikaz)
+ * electricityPrice napraviti da bude record?(ako se to tako koristi)
  *
  * svaka klasa mora bit svoj meni
  */

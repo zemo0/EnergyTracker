@@ -2,9 +2,9 @@ package com.models;
 
 import java.io.Serializable;
 
-public class Administrator extends Racun implements Serializable {
+public class Admin extends Role implements Serializable {
 
-    public Administrator(AdministratorBuilder builder){
+    public Admin(AdministratorBuilder builder){
         super(builder.username, builder.password, "Administrator");
     }
     public static class AdministratorBuilder{
@@ -18,8 +18,8 @@ public class Administrator extends Racun implements Serializable {
             this.password = password;
             return this;
         }
-        public Administrator build(){
-            return new Administrator(this);
+        public Admin build(){
+            return new Admin(this);
         }
     }
 }

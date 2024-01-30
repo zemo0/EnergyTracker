@@ -1,6 +1,6 @@
 package com.javafxFiles;
 
-import com.models.Racun;
+import com.models.Role;
 import com.utils.FileUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,13 +18,13 @@ public class LoginController {
     @FXML
     private PasswordField passwordTextField;
     public void loginButton(){
-        Set<Racun> racuni = FileUtils.dohvatPodatakaORacunima();
+        Set<Role> racuni = FileUtils.dohvatPodatakaORacunima();
         String usernameTextFieldText = usernameTextField.getText();
         String passwordPasswordFieldText = passwordTextField.getText();
         boolean areTextFieldsEqual = false;
-        for(Racun racun : racuni){
-            if (racun.getUsername().equals(usernameTextFieldText) &&
-                    racun.getPassword().equals(passwordPasswordFieldText)) {
+        for(Role role : racuni){
+            if (role.getUsername().equals(usernameTextFieldText) &&
+                    role.getPassword().equals(passwordPasswordFieldText)) {
                 areTextFieldsEqual = true;
                 break;
             }

@@ -2,9 +2,9 @@ package com.models;
 
 import java.io.Serializable;
 
-public class Korisnik extends Racun implements Serializable {
+public class User extends Role implements Serializable {
 
-    private Korisnik(KorisnikBuilder builder){
+    private User(KorisnikBuilder builder){
         super(builder.username, builder.password, "Korisnik");
     }
 
@@ -19,8 +19,8 @@ public class Korisnik extends Racun implements Serializable {
             this.password = password;
             return this;
         }
-        public Korisnik build(){
-            return new Korisnik(this);
+        public User build(){
+            return new User(this);
         }
     }
 }
