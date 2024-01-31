@@ -29,7 +29,6 @@ import static com.mainPackage.Main.logger;
  * Kategorija trošila(dodaj novu, izmjeni, izbrisi)
  * Potrošnja proizvoda(ostala dve klase ukomponirane u ovu -> dodaj, izmjeni, izbrisi)
  * Račun(ukupni trošak i ispis svih troškova za taj mjesec, samo lijepi prikaz), prikazat ga na home pageu
- * electricityPrice napraviti da bude record?(ako se to tako koristi)
  *
  * svaka klasa mora bit svoj meni
  * nemoj komplicirat zasad, napravi sve kako zahtijeva i onda dodavaj nove stvari

@@ -10,7 +10,7 @@ public class MenuBarController {
     public void showEnterNewApplianceScreen() {
         FXMLLoader fxmlLoader =
                 new FXMLLoader(HelloApplication.class.getResource(
-                        "enterNewApplianceScreen.fxml"));
+                        "enterNewCategoryScreen.fxml"));
         Scene scene = null;
         try {
             scene = new Scene(fxmlLoader.load(), 850, 600);

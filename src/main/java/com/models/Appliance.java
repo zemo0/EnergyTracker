@@ -3,21 +3,28 @@ package com.models;
 import javafx.fxml.FXML;
 
 public class Appliance {
+    private Category applianceCategory;
     private Double appliancePowerUse;
     private Double dailyUseTime;
     private Boolean tariff; //true = dnevna, false = nocna
     private Double dailyConsumption; // appPowerUse * dailyUseTime
     public Appliance(ApplianceBuilder builder){
+        this.applianceCategory = builder.applianceCategory;
         this.appliancePowerUse = builder.appliancePowerUse;
         this.dailyUseTime = builder.dailyUseTime;
         this.tariff = builder.tariff;
         this.dailyConsumption = builder.dailyConsumption;
     }
     public static class ApplianceBuilder{
+        private Category applianceCategory;
         private Double appliancePowerUse;
         private Double dailyUseTime;
         private Boolean tariff;
         private Double dailyConsumption;
+        public ApplianceBuilder applianceCategory(Category category){
+            applianceCategory = category;
+            return this;
+        }
         public ApplianceBuilder appliancePowerUse(Double appliancePowerUse){
             this.appliancePowerUse = appliancePowerUse;
             return this;
@@ -35,6 +42,14 @@ public class Appliance {
             return this;
         }
         public Appliance build(){return new Appliance(this);}
+    }
+
+    public Category getApplianceCategory() {
+        return applianceCategory;
+    }
+
+    public void setApplianceCategory(Category applianceCategory) {
+        this.applianceCategory = applianceCategory;
     }
 
     public Double getAppliancePowerUse() {

@@ -10,6 +10,9 @@
 
 .MenuBar{
     -fx-background-color: #1E90FF;
-    -fx-font-size: 14px;
+    -fx-font-size: 15px;
 }
 
+.menu-bar > .menu > .label{
+    -fx-text-fill: #ffffff;
+}
