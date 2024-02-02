@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class MenuBarController {
 
-    public void showEnterNewApplianceScreen() {
+    public void showEnterNewCategoryScreen() {
         FXMLLoader fxmlLoader =
                 new FXMLLoader(HelloApplication.class.getResource(
                         "enterNewCategoryScreen.fxml"));

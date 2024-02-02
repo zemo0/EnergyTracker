@@ -32,6 +32,8 @@ import static com.mainPackage.Main.logger;
  *
  * svaka klasa mora bit svoj meni
  * nemoj komplicirat zasad, napravi sve kako zahtijeva i onda dodavaj nove stvari
+ *
+ * dodati database funkcionalnost
  */
 
 public class HelloApplication extends Application {
