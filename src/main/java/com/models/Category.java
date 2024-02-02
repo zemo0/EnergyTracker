@@ -1,18 +1,24 @@
 package com.models;
 
 public class Category {
+    private Long id;
     private String name;
     private String description;
 
     public Category(CategoryBuilder builder){
+        this.id = builder.id;
         this.name = builder.name;
         this.description = builder.description;
     }
 
     public static class CategoryBuilder{
+        private Long id;
         private String name;
         private String description;
-
+        public CategoryBuilder id(Long _id){
+            this.id = _id;
+            return this;
+        }
         public CategoryBuilder name(String _name){
             this.name = _name;
             return this;
@@ -38,5 +44,14 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

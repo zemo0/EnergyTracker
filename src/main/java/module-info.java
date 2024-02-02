@@ -4,6 +4,7 @@ module com.energytracker {
     requires javafx.base;
     requires javafx.graphics;
     requires org.slf4j;
+    requires java.sql;
 
 
     opens com.javafxFiles to javafx.fxml;
