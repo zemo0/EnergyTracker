@@ -55,7 +55,7 @@
                <Insets right="10.0" />
             </GridPane.margin>
          </Label>
-         <ComboBox prefHeight="26.0" prefWidth="171.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+         <ComboBox fx:id="categoryComboBox" prefHeight="26.0" prefWidth="171.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1" />
          <Label text="Potrošnja uređaja(W):" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
             <font>
                <Font size="18.0" />
@@ -80,21 +80,21 @@
                <Insets right="10.0" />
             </GridPane.margin>
          </Label>
-         <TextField GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-         <TextField GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-         <ComboBox prefHeight="26.0" prefWidth="171.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+         <TextField fx:id="appliancePowerUseTextField" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+         <TextField fx:id="dailyUseTimeTextField" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+         <ComboBox fx:id="tariffComboBox" prefHeight="26.0" prefWidth="171.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="4" />
          <Button mnemonicParsing="false" prefWidth="70.0" text="Dodaj" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="5">
             <font>
                <Font size="14.0" />
             </font>
          </Button>
-         <TableView maxWidth="850.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="10" GridPane.rowIndex="6" GridPane.rowSpan="5">
+         <TableView fx:id="applianceTableView" maxWidth="850.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="10" GridPane.rowIndex="6" GridPane.rowSpan="5">
            <columns>
-             <TableColumn prefWidth="170.0" text="Ime" />
-             <TableColumn prefWidth="170.0" text="Potrošnja(W)" />
-               <TableColumn prefWidth="170.0" text="Vrijeme korištenja(H)" />
-               <TableColumn prefWidth="170.0" text="Tarifa" />
-               <TableColumn prefWidth="170.0" text="Dnevna potrošnja" />
+             <TableColumn fx:id="applianceCategoryTableColumn" prefWidth="170.0" text="Ime" />
+             <TableColumn fx:id="appliancePowerUseTableColumn" prefWidth="170.0" text="Potrošnja(W)" />
+               <TableColumn fx:id="appliancedDailyUseTimeTableColumn" prefWidth="170.0" text="Vrijeme korištenja(H)" />
+               <TableColumn fx:id="applianceTariffTableColumn" prefWidth="170.0" text="Tarifa" />
+               <TableColumn fx:id="applianceDailyConsumptionTableColumn" prefWidth="170.0" text="Dnevna potrošnja" />
            </columns>
          </TableView>
          <Button mnemonicParsing="false" prefWidth="70.0" text="Izmjeni" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">

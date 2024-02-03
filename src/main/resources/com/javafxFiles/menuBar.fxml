@@ -17,7 +17,7 @@
                </items></Menu>
             <Menu mnemonicParsing="false" text="Uređaji">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Izmjena uređaja" />
+                  <MenuItem mnemonicParsing="false" onAction="#showEnterNewApplianceScreen" text="Unos uređaja" />
                   <MenuItem mnemonicParsing="false" text="Brisanje uređaja" />
                </items>
             </Menu>
