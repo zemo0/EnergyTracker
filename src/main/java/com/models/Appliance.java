@@ -34,6 +34,10 @@ public class Appliance {
             applianceCategory = categories.get(Math.toIntExact(categoryId));
             return this;
         }
+        public ApplianceBuilder category(Category category){
+            this.applianceCategory = category;
+            return this;
+        }
         public ApplianceBuilder appliancePowerUse(Double appliancePowerUse){
             this.appliancePowerUse = appliancePowerUse;
             return this;
@@ -42,7 +46,7 @@ public class Appliance {
             this.dailyUseTime = dailyUseTime;
             return this;
         }
-        public ApplianceBuilder tarrif(Boolean tariff){
+        public ApplianceBuilder tariff(Boolean tariff){
             this.tariff = tariff;
             return this;
         }

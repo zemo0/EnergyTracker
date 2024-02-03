@@ -18,4 +18,15 @@ public class Main {
         }
         return id;
     }
+    public static Category getCategoryBasedOnName(String name){
+        List<Category> categories = DatabaseUtils.getAllCategories();
+        long id = 0;
+        Category category = null;
+        for(Category c : categories){
+            if(c.getName().equals(name)){
+                category = c;
+            }
+        }
+        return category;
+    }
 }

@@ -60,7 +60,13 @@ public class EnterNewApplianceController {
         tariffComboBox.setItems(observableTariffs);
     }
     public void addAppliance(){
-
+        Category category = categoryComboBox.getValue();
+        Double appliancePowerUse = Double.parseDouble(appliancePowerUseTextField.getText());
+        Double dailyUseTime = Double.parseDouble(dailyUseTimeTextField.getText());
+        String tariff = tariffComboBox.getValue();
+        Appliance appliance = new Appliance.ApplianceBuilder().category(category)
+                .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff)).build();
+        DatabaseUtils.insertNewAppliance(appliance);
     }
     public void searchAppliance(){
 

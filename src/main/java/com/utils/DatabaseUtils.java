@@ -61,7 +61,7 @@ public class DatabaseUtils {
                 Double dailyConsumption = rs.getDouble("DAILY_CONSUMPTION");
                 Appliance appliance = new Appliance.ApplianceBuilder().id(id).categoryId(categoryId-1)
                         .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime)
-                        .tarrif(tariff).dailyConsumption(dailyConsumption).build();
+                        .tariff(tariff).dailyConsumption(dailyConsumption).build();
                 appliances.add(appliance);
             }
         } catch (SQLException | IOException ex){
