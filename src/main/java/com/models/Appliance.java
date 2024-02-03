@@ -1,7 +1,8 @@
 package com.models;
 
 import javafx.fxml.FXML;
-
+import java.util.List;
+import com.utils.DatabaseUtils;
 public class Appliance {
     private Long id;
     private Category applianceCategory;
@@ -28,8 +29,9 @@ public class Appliance {
             this.id = id;
             return this;
         }
-        public ApplianceBuilder applianceCategory(Category category){
-            applianceCategory = category;
+        public ApplianceBuilder categoryId(Long categoryId){
+            List<Category> categories = DatabaseUtils.getAllCategories();
+            applianceCategory = categories.get(Math.toIntExact(categoryId));
             return this;
         }
         public ApplianceBuilder appliancePowerUse(Double appliancePowerUse){
@@ -97,5 +99,17 @@ public class Appliance {
 
     public void setDailyConsumption(Double dailyConsumption) {
         this.dailyConsumption = dailyConsumption;
+    }
+
+    @Override
+    public String toString() {
+        return "Appliance{" +
+                "id=" + id +
+                ", applianceCategory=" + applianceCategory +
+                ", appliancePowerUse=" + appliancePowerUse +
+                ", dailyUseTime=" + dailyUseTime +
+                ", tariff=" + tariff +
+                ", dailyConsumption=" + dailyConsumption +
+                '}';
     }
 }
