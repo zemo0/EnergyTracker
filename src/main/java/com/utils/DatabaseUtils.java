@@ -97,5 +97,29 @@ public class DatabaseUtils {
             ex.printStackTrace();
         }
     }
+    public static void updateCategory(Category category, Long id) {
+        try (Connection connection = connectToDatabase()) {
+            String sqlQuery = "UPDATE CATEGORY SET NAME = ?, DESCRIPTION = ? WHERE ID = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
+            pstmt.setString(1, category.getName());
+            pstmt.setString(2, category.getDescription());
+            pstmt.setLong(3, id);
+            pstmt.executeUpdate();
+        } catch (SQLException | IOException ex) {
+            logger.error("Greška pri ažuriranju kategorije u bazi podataka");
+            ex.printStackTrace();
+        }
+    }
+    public static void deleteCategory(Category category) {
+        try (Connection connection = connectToDatabase()) {
+            String sqlQuery = "DELETE FROM CATEGORY WHERE ID = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
+            pstmt.setLong(1, category.getId());
+            pstmt.executeUpdate();
+        } catch (SQLException | IOException ex) {
+            logger.error("Greška pri brisanju kategorije iz baze podataka");
+            ex.printStackTrace();
+        }
+    }
 
 }

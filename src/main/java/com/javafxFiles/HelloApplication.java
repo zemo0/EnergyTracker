@@ -33,7 +33,10 @@ import static com.mainPackage.Main.logger;
  * svaka klasa mora bit svoj meni
  * nemoj komplicirat zasad, napravi sve kako zahtijeva i onda dodavaj nove stvari
  *
- * dodati database funkcionalnost
+ * dodaj, izmjeni, izbrisi - sve to mora biti u jednom prozoru
+ * ispod toga search bar
+ * korisnik kod izmjene mora unijeti jedan podatak tocno i drugi podatak koji zeli izmjeniti
+ * izbrisi napraviti da radi preko unosa ili klikom na redak pa na gumb
  */
 
 public class HelloApplication extends Application {
