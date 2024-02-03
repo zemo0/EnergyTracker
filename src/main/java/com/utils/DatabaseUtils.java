@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.mainPackage.Main;
 import com.models.Appliance;
 import com.models.Category;
 
@@ -44,7 +45,6 @@ public class DatabaseUtils {
 
         return categories;
     }
-
     public static List<Appliance> getAllAppliances(){
         List<Appliance> appliances = new ArrayList<>();
         try(Connection connection = connectToDatabase()) {
@@ -70,4 +70,32 @@ public class DatabaseUtils {
         }
         return appliances;
     }
+    public static void insertNewCategory(Category category){
+        try(Connection connection = connectToDatabase()){
+            String sqlQuery = "INSERT INTO CATEGORY (NAME, DESCRIPTION) VALUES (?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
+            pstmt.setString(1, category.getName());
+            pstmt.setString(2, category.getDescription());
+            pstmt.executeUpdate();
+        } catch (SQLException | IOException ex){
+            logger.error("Greška pri unosu nove kategorije u bazu podataka");
+            ex.printStackTrace();
+        }
+    }
+    public static void insertNewAppliance(Appliance appliance){
+        try(Connection connection = connectToDatabase()){
+            String sqlQuery = "INSERT INTO APPLIANCE (CATEGORY_ID, APPLIANCE_POWER_USE, DAILY_USE_TIME, TARIFF, DAILY_CONSUMPTION) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
+            pstmt.setLong(1, Main.getCategoryId(appliance.getApplianceCategory()));
+            pstmt.setDouble(2, appliance.getAppliancePowerUse());
+            pstmt.setDouble(3, appliance.getDailyUseTime());
+            pstmt.setBoolean(4, appliance.getTariff());
+            pstmt.setDouble(5, appliance.getDailyConsumption());
+            pstmt.executeUpdate();
+        } catch (SQLException | IOException ex){
+            logger.error("Greška pri unosu novog uređaja u bazu podataka");
+            ex.printStackTrace();
+        }
+    }
+
 }
