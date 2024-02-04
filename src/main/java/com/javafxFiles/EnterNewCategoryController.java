@@ -7,10 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.util.List;
@@ -30,6 +27,8 @@ public class EnterNewCategoryController {
     private TableColumn<Category, String> categoryNameTableColumn;
     @FXML
     private TableColumn<Category, String> categoryDescriptionTableColumn;
+    @FXML
+    private Button changeCategoryButton;
     public void initialize(){
         categoryNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Category, String>, ObservableValue<String>>() {
             @Override
@@ -73,10 +72,20 @@ public class EnterNewCategoryController {
     public void changeCategory(){
         Category selectedCategory = categoryTableView.getSelectionModel().getSelectedItem();//treba implementirat update tablice nakon izmjene jedne kategorije
         if(selectedCategory != null && !categoryNameTextField.getText().isEmpty() && !categoryDescriptionTextField.getText().isEmpty()){
-            String categoryName = categoryNameTextField.getText();
-            String categoryDescription = categoryDescriptionTextField.getText();
-            Category category = new Category.CategoryBuilder().name(categoryName).description(categoryDescription).build();
-            DatabaseUtils.updateCategory(category, selectedCategory.getId());
+            Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);//samo potvrda promjene podataka
+            confirmationDialog.setTitle("Potvrda");
+            confirmationDialog.setHeaderText("Jeste li sigurni da želite promjeniti podatke izabrane kategorije?");
+            confirmationDialog.setContentText("Stisnite OK za potvrdu");
+            confirmationDialog.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    String categoryName = categoryNameTextField.getText();
+                    String categoryDescription = categoryDescriptionTextField.getText();
+                    Category category = new Category.CategoryBuilder().name(categoryName).description(categoryDescription).build();
+                    DatabaseUtils.updateCategory(category, selectedCategory.getId());
+                } else {
+                    logger.info("Promjena podataka kategorije nije potvrđena");
+                }
+            });
         } else if(categoryNameTextField.getText().isEmpty() || categoryDescriptionTextField.getText().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("GREŠKA KOD UNOSA");
@@ -97,8 +106,18 @@ public class EnterNewCategoryController {
 
     public void deleteCategory(){
         Category selectedCategory = categoryTableView.getSelectionModel().getSelectedItem();//treba implementirat update tablice nakon izmjene jedne kategorije
-        DatabaseUtils.deleteCategory(selectedCategory);
-        clearFields();
+        Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);//samo potvrda promjene podataka
+        confirmationDialog.setTitle("Potvrda");
+        confirmationDialog.setHeaderText("Jeste li sigurni da želite promjeniti podatke izabrane kategorije?");
+        confirmationDialog.setContentText("Stisnite OK za potvrdu");
+        confirmationDialog.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                DatabaseUtils.deleteCategory(selectedCategory);
+                clearFields();
+            } else {
+                logger.info("Promjena podataka kategorije nije potvrđena");
+            }
+        });
     }
     public void clearFields(){
         categoryNameTextField.clear();

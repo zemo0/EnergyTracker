@@ -119,20 +119,30 @@ public class EnterNewApplianceController {
         if(selectedAppliance != null && categoryComboBox.getValue() != null && monthsComboBox.getValue() != null
                 && !appliancePowerUseTextField.getText().isEmpty() && !dailyUseTimeTextField.getText().isEmpty()
                 && tariffComboBox.getValue() != null){
-            Category category = categoryComboBox.getValue();
-            Months month = monthsComboBox.getValue();
-            Double appliancePowerUse = Double.parseDouble(appliancePowerUseTextField.getText());
-            Double dailyUseTime = Double.parseDouble(dailyUseTimeTextField.getText());
-            String tariff = tariffComboBox.getValue();
-            Double dailyConsumption = (appliancePowerUse/1000) * dailyUseTime;
-            Appliance appliance = new Appliance.ApplianceBuilder().category(category).month(month)
-                    .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
-                    .dailyConsumption(dailyConsumption).build();
-            DatabaseUtils.updateAppliance(appliance, selectedAppliance.getId());
-            List<Appliance> appliances = DatabaseUtils.getAllAppliances();//prikaz podataka nakon izmjene
-            ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);
-            applianceTableView.setItems(observableAppliances);
-            clearFields();
+            Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);//samo potvrda promjene podataka
+            confirmationDialog.setTitle("Potvrda");
+            confirmationDialog.setHeaderText("Jeste li sigurni da želite promjeniti podatke izabrane kategorije?");
+            confirmationDialog.setContentText("Stisnite OK za potvrdu");
+            confirmationDialog.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    Category category = categoryComboBox.getValue();
+                    Months month = monthsComboBox.getValue();
+                    double appliancePowerUse = Double.parseDouble(appliancePowerUseTextField.getText());
+                    double dailyUseTime = Double.parseDouble(dailyUseTimeTextField.getText());
+                    String tariff = tariffComboBox.getValue();
+                    Double dailyConsumption = (appliancePowerUse/1000) * dailyUseTime;
+                    Appliance appliance = new Appliance.ApplianceBuilder().category(category).month(month)
+                            .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
+                            .dailyConsumption(dailyConsumption).build();
+                    DatabaseUtils.updateAppliance(appliance, selectedAppliance.getId());
+                    List<Appliance> appliances = DatabaseUtils.getAllAppliances();//prikaz podataka nakon izmjene
+                    ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);
+                    applianceTableView.setItems(observableAppliances);
+                    clearFields();
+                } else {
+                    logger.info("Promjena podataka trošila nije potvrđena");
+                }
+            });
         } else if(selectedAppliance == null){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("GREŠKA KOD UNOSA");
@@ -152,11 +162,21 @@ public class EnterNewApplianceController {
     public void deleteAppliance(){
         Appliance selectedAppliance = applianceTableView.getSelectionModel().getSelectedItem();
         if(selectedAppliance != null){
-            DatabaseUtils.deleteAppliance(selectedAppliance);
-            List<Appliance> appliances = DatabaseUtils.getAllAppliances();
-            ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);
-            applianceTableView.setItems(observableAppliances);
-            clearFields();
+            Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);//samo potvrda promjene podataka
+            confirmationDialog.setTitle("Potvrda");
+            confirmationDialog.setHeaderText("Jeste li sigurni da želite promjeniti podatke izabrane kategorije?");
+            confirmationDialog.setContentText("Stisnite OK za potvrdu");
+            confirmationDialog.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    DatabaseUtils.deleteAppliance(selectedAppliance);
+                    List<Appliance> appliances = DatabaseUtils.getAllAppliances();
+                    ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);
+                    applianceTableView.setItems(observableAppliances);
+                    clearFields();
+                } else {
+                    logger.info("Promjena podataka trošila nije potvrđena");
+                }
+            });
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("GREŠKA KOD UNOSA");
