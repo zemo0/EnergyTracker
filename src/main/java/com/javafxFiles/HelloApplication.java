@@ -33,11 +33,9 @@ import static com.mainPackage.Main.logger;
  * svaka klasa mora bit svoj meni
  * nemoj komplicirat zasad, napravi sve kako zahtijeva i onda dodavaj nove stvari
  *
- * dodaj, izmjeni, izbrisi - sve to mora biti u jednom prozoru
- * ispod toga search bar
- * korisnik kod izmjene mora unijeti jedan podatak tocno i drugi podatak koji zeli izmjeniti
- * izbrisi napraviti da radi preko unosa ili klikom na redak pa na gumb
- * Napraviti sve to za Appliance
+ * implementirati Bill kao interface koji pokazuje troškove mjesec po mjesec?
+ * Saznati što napraviti kao generičnu klasu
+ *
  */
 
 public class HelloApplication extends Application {
