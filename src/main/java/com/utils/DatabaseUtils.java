@@ -114,6 +114,24 @@ public class DatabaseUtils {
             ex.printStackTrace();
         }
     }
+    public static void updateAppliance(Appliance appliance, Long id){
+        try (Connection connection = connectToDatabase()) {
+            String sqlQuery = "UPDATE APPLIANCE SET CATEGORY_ID = ?, MONTH_OF_USE = ?, " +
+                    "APPLIANCE_POWER_USE = ?, DAILY_USE_TIME = ?, TARIFF = ?, DAILY_CONSUMPTION = ? WHERE ID = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
+            pstmt.setLong(1, appliance.getApplianceCategory().getId());
+            pstmt.setString(2, appliance.getMonth());
+            pstmt.setDouble(3, appliance.getAppliancePowerUse());
+            pstmt.setDouble(4, appliance.getDailyUseTime());
+            pstmt.setBoolean(5, appliance.getTariff());
+            pstmt.setDouble(6, appliance.getDailyConsumption());
+            pstmt.setLong(7, id);
+            pstmt.executeUpdate();
+        } catch (SQLException | IOException ex) {
+            logger.error("Greška pri ažuriranju kategorije u bazi podataka");
+            ex.printStackTrace();
+        }
+    }
     public static void deleteCategory(Category category) {
         try (Connection connection = connectToDatabase()) {
             String sqlQuery = "DELETE FROM CATEGORY WHERE ID = ?";
@@ -122,6 +140,17 @@ public class DatabaseUtils {
             pstmt.executeUpdate();
         } catch (SQLException | IOException ex) {
             logger.error("Greška pri brisanju kategorije iz baze podataka");
+            ex.printStackTrace();
+        }
+    }
+    public static void deleteAppliance(Appliance appliance) {
+        try (Connection connection = connectToDatabase()) {
+            String sqlQuery = "DELETE FROM APPLIANCE WHERE ID = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
+            pstmt.setLong(1, appliance.getId());
+            pstmt.executeUpdate();
+        } catch (SQLException | IOException ex) {
+            logger.error("Greška pri brisanju uređaja iz baze podataka");
             ex.printStackTrace();
         }
     }

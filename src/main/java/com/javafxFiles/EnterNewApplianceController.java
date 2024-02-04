@@ -9,15 +9,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import com.models.Category;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import com.models.Appliance;
 import javafx.util.Callback;
 
 import java.util.List;
+
+import static com.mainPackage.Main.logger;
 
 public class EnterNewApplianceController {
     @FXML
@@ -105,6 +104,7 @@ public class EnterNewApplianceController {
                 .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
                 .dailyConsumption(dailyConsumption).build();
         DatabaseUtils.insertNewAppliance(appliance);
+        clearFields();
     }
     public void searchAppliance(){
         String searchApplianceText = searchApplianceTextField.getText();
@@ -115,15 +115,62 @@ public class EnterNewApplianceController {
         applianceTableView.setItems(observableAppliances);
     }
     public void changeAppliance(){
-
+        Appliance selectedAppliance = applianceTableView.getSelectionModel().getSelectedItem();
+        if(selectedAppliance != null && categoryComboBox.getValue() != null && monthsComboBox.getValue() != null
+                && !appliancePowerUseTextField.getText().isEmpty() && !dailyUseTimeTextField.getText().isEmpty()
+                && tariffComboBox.getValue() != null){
+            Category category = categoryComboBox.getValue();
+            Months month = monthsComboBox.getValue();
+            Double appliancePowerUse = Double.parseDouble(appliancePowerUseTextField.getText());
+            Double dailyUseTime = Double.parseDouble(dailyUseTimeTextField.getText());
+            String tariff = tariffComboBox.getValue();
+            Double dailyConsumption = (appliancePowerUse/1000) * dailyUseTime;
+            Appliance appliance = new Appliance.ApplianceBuilder().category(category).month(month)
+                    .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
+                    .dailyConsumption(dailyConsumption).build();
+            DatabaseUtils.updateAppliance(appliance, selectedAppliance.getId());
+            List<Appliance> appliances = DatabaseUtils.getAllAppliances();//prikaz podataka nakon izmjene
+            ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);
+            applianceTableView.setItems(observableAppliances);
+            clearFields();
+        } else if(selectedAppliance == null){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("GREŠKA KOD UNOSA");
+            alert.setHeaderText("Niste odabrali trošilo");
+            alert.setContentText("Molimo vas da odaberete trošilo koje želite promijeniti");
+            alert.showAndWait();
+            logger.info("Appliance za promjenu nije izabrana");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("GREŠKA KOD UNOSA");
+            alert.setHeaderText("Niste unijeli podatke");
+            alert.setContentText("Molimo vas da unesete kako biste htjeli da ti podatci izgledaju");
+            alert.showAndWait();
+            logger.info("Nisu uneseni podatci za promjenu trošila");
+        }
     }
     public void deleteAppliance(){
-
+        Appliance selectedAppliance = applianceTableView.getSelectionModel().getSelectedItem();
+        if(selectedAppliance != null){
+            DatabaseUtils.deleteAppliance(selectedAppliance);
+            List<Appliance> appliances = DatabaseUtils.getAllAppliances();
+            ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);
+            applianceTableView.setItems(observableAppliances);
+            clearFields();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("GREŠKA KOD UNOSA");
+            alert.setHeaderText("Niste odabrali trošilo");
+            alert.setContentText("Molimo vas da odaberete trošilo koje želite obrisati");
+            alert.showAndWait();
+            logger.info("Appliance za brisanje nije izabrana");
+        }
     }
     public void clearFields(){
         categoryComboBox.getSelectionModel().clearSelection();
         appliancePowerUseTextField.clear();
         dailyUseTimeTextField.clear();
         tariffComboBox.getSelectionModel().clearSelection();
+        monthsComboBox.getSelectionModel().clearSelection();
     }
 }
