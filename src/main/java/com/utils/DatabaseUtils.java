@@ -10,6 +10,7 @@ import java.util.Properties;
 import com.mainPackage.Main;
 import com.models.Appliance;
 import com.models.Category;
+import com.models.Months;
 
 import static com.mainPackage.Main.logger;
 
@@ -40,6 +41,7 @@ public class DatabaseUtils {
                 categories.add(category);
             }
         } catch (SQLException | IOException ex){
+            logger.error("Greška pri spajanju na bazu podataka");
             ex.printStackTrace();
         }
 
@@ -54,12 +56,13 @@ public class DatabaseUtils {
             ResultSet rs = stmt.getResultSet();
             while(rs.next()){
                 Long id = rs.getLong("ID");
-                Long categoryId = rs.getLong("CATEGORY_ID");
+                long categoryId = rs.getLong("CATEGORY_ID");
+                Months month = Months.valueOf(rs.getString("MONTH_OF_USE"));
                 Double appliancePowerUse = rs.getDouble("APPLIANCE_POWER_USE");
                 Double dailyUseTime = rs.getDouble("DAILY_USE_TIME");
                 Boolean tariff = rs.getBoolean("TARIFF");
                 Double dailyConsumption = rs.getDouble("DAILY_CONSUMPTION");
-                Appliance appliance = new Appliance.ApplianceBuilder().id(id).categoryId(categoryId-1)
+                Appliance appliance = new Appliance.ApplianceBuilder().id(id).categoryId(categoryId).month(month)
                         .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime)
                         .tariff(tariff).dailyConsumption(dailyConsumption).build();
                 appliances.add(appliance);
@@ -84,13 +87,14 @@ public class DatabaseUtils {
     }
     public static void insertNewAppliance(Appliance appliance){
         try(Connection connection = connectToDatabase()){
-            String sqlQuery = "INSERT INTO APPLIANCE (CATEGORY_ID, APPLIANCE_POWER_USE, DAILY_USE_TIME, TARIFF, DAILY_CONSUMPTION) VALUES (?, ?, ?, ?, ?)";
+            String sqlQuery = "INSERT INTO APPLIANCE (CATEGORY_ID, MONTH_OF_USE, APPLIANCE_POWER_USE, DAILY_USE_TIME, TARIFF, DAILY_CONSUMPTION) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
             pstmt.setLong(1, Main.getCategoryId(appliance.getApplianceCategory()));
-            pstmt.setDouble(2, appliance.getAppliancePowerUse());
-            pstmt.setDouble(3, appliance.getDailyUseTime());
-            pstmt.setBoolean(4, appliance.getTariff());
-            pstmt.setDouble(5, appliance.getDailyConsumption());
+            pstmt.setString(2, appliance.getMonth());
+            pstmt.setDouble(3, appliance.getAppliancePowerUse());
+            pstmt.setDouble(4, appliance.getDailyUseTime());
+            pstmt.setBoolean(5, appliance.getTariff());
+            pstmt.setDouble(6, appliance.getDailyConsumption());
             pstmt.executeUpdate();
         } catch (SQLException | IOException ex){
             logger.error("Greška pri unosu novog uređaja u bazu podataka");

@@ -37,6 +37,7 @@ import static com.mainPackage.Main.logger;
  * ispod toga search bar
  * korisnik kod izmjene mora unijeti jedan podatak tocno i drugi podatak koji zeli izmjeniti
  * izbrisi napraviti da radi preko unosa ili klikom na redak pa na gumb
+ * Napraviti sve to za Appliance
  */
 
 public class HelloApplication extends Application {

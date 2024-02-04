@@ -6,6 +6,7 @@ import com.utils.DatabaseUtils;
 public class Appliance {
     private Long id;
     private Category applianceCategory;
+    private String month;
     private Double appliancePowerUse;
     private Double dailyUseTime;
     private Boolean tariff; //true = dnevna, false = nocna
@@ -13,6 +14,7 @@ public class Appliance {
     public Appliance(ApplianceBuilder builder){
         this.id = builder.id;
         this.applianceCategory = builder.applianceCategory;
+        this.month = builder.month;
         this.appliancePowerUse = builder.appliancePowerUse;
         this.dailyUseTime = builder.dailyUseTime;
         this.tariff = builder.tariff;
@@ -21,6 +23,7 @@ public class Appliance {
     public static class ApplianceBuilder{
         private Long id;
         private Category applianceCategory;
+        private String month;
         private Double appliancePowerUse;
         private Double dailyUseTime;
         private Boolean tariff;
@@ -31,11 +34,19 @@ public class Appliance {
         }
         public ApplianceBuilder categoryId(Long categoryId){
             List<Category> categories = DatabaseUtils.getAllCategories();
-            applianceCategory = categories.get(Math.toIntExact(categoryId));
+            for(Category category : categories){
+                if(category.getId().equals(categoryId)){
+                    this.applianceCategory = category;
+                }
+            }
             return this;
         }
         public ApplianceBuilder category(Category category){
             this.applianceCategory = category;
+            return this;
+        }
+        public ApplianceBuilder month(Months month){
+            this.month = month.toString();
             return this;
         }
         public ApplianceBuilder appliancePowerUse(Double appliancePowerUse){
@@ -105,11 +116,20 @@ public class Appliance {
         this.dailyConsumption = dailyConsumption;
     }
 
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
     @Override
     public String toString() {
         return "Appliance{" +
                 "id=" + id +
                 ", applianceCategory=" + applianceCategory +
+                ", month='" + month + '\'' +
                 ", appliancePowerUse=" + appliancePowerUse +
                 ", dailyUseTime=" + dailyUseTime +
                 ", tariff=" + tariff +
