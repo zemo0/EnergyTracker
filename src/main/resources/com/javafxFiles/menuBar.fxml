@@ -21,7 +21,15 @@
                   <MenuItem mnemonicParsing="false" text="Brisanje uređaja" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Promjene" />
+            <Menu mnemonicParsing="false" text="Račun">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showBillScreen" text="Pregled računa" />
+               </items></Menu>
+            <Menu mnemonicParsing="false" text="Promjene">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Brisanje uređaja" />
+               </items>
+            </Menu>
         </menus>
          <styleClass>
             <String fx:value="MenuBar" />

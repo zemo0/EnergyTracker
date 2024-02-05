@@ -33,7 +33,8 @@ import static com.mainPackage.Main.logger;
  * svaka klasa mora bit svoj meni
  * nemoj komplicirat zasad, napravi sve kako zahtijeva i onda dodavaj nove stvari
  *
- * implementirati Bill kao interface koji pokazuje troškove mjesec po mjesec?
+ * implementirati Bill kao interface koji pokazuje troškove mjesec po mjesec?(ime kategorije, mjesec, ukupna potršnja, tarifa,
+ * ukupna cijena) i sve to zbrojit i prikazat na kraju
  * Saznati što napraviti kao generičnu klasu
  *
  */

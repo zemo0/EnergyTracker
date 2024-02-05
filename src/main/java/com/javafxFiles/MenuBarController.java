@@ -35,4 +35,18 @@ public class MenuBarController {
         HelloApplication.getStage().setScene(scene);
         HelloApplication.getStage().show();
     }
+    public void showBillScreen() {
+        FXMLLoader fxmlLoader =
+                new FXMLLoader(HelloApplication.class.getResource(
+                        "billScreen.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 850, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HelloApplication.getStage().setScene(scene);
+        HelloApplication.getStage().show();
+    }
 }
