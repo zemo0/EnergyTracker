@@ -154,5 +154,30 @@ public class DatabaseUtils {
             ex.printStackTrace();
         }
     }
+    public static List<Appliance> getAppliancesByMonth(String month){
+        List<Appliance> appliances = new ArrayList<>();
+        try (Connection connection = connectToDatabase()) {
+            String sqlQuery = "SELECT * FROM APPLIANCE WHERE MONTH_OF_USE = '" + month + "'";
+            Statement stmt = connection.createStatement();
+            stmt.execute(sqlQuery);
+            ResultSet rs = stmt.getResultSet();
+            while(rs.next()){
+                Long id = rs.getLong("ID");
+                long categoryId = rs.getLong("CATEGORY_ID");
+                Double appliancePowerUse = rs.getDouble("APPLIANCE_POWER_USE");
+                Double dailyUseTime = rs.getDouble("DAILY_USE_TIME");
+                Boolean tariff = rs.getBoolean("TARIFF");
+                Double dailyConsumption = rs.getDouble("DAILY_CONSUMPTION");
+                Appliance appliance = new Appliance.ApplianceBuilder().id(id).categoryId(categoryId).month(Months.valueOf(month))
+                        .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime)
+                        .tariff(tariff).dailyConsumption(dailyConsumption).build();
+                appliances.add(appliance);
+            }
+        } catch (SQLException | IOException ex) {
+            logger.error("Greška pri brisanju uređaja iz baze podataka");
+            ex.printStackTrace();
+        }
+        return appliances;
+    }
 
 }

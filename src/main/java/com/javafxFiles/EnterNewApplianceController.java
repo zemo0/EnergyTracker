@@ -96,10 +96,10 @@ public class EnterNewApplianceController {
     public void addAppliance(){
         Category category = categoryComboBox.getValue();
         Months month = monthsComboBox.getValue();
-        Double appliancePowerUse = Double.parseDouble(appliancePowerUseTextField.getText());
-        Double dailyUseTime = Double.parseDouble(dailyUseTimeTextField.getText());
-        String tariff = tariffComboBox.getValue();
+        double appliancePowerUse = Double.parseDouble(appliancePowerUseTextField.getText());
+        double dailyUseTime = Double.parseDouble(dailyUseTimeTextField.getText());
         Double dailyConsumption = (appliancePowerUse/1000) * dailyUseTime;
+        String tariff = tariffComboBox.getValue();
         Appliance appliance = new Appliance.ApplianceBuilder().category(category).month(month)
                 .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
                 .dailyConsumption(dailyConsumption).build();
@@ -129,8 +129,8 @@ public class EnterNewApplianceController {
                     Months month = monthsComboBox.getValue();
                     double appliancePowerUse = Double.parseDouble(appliancePowerUseTextField.getText());
                     double dailyUseTime = Double.parseDouble(dailyUseTimeTextField.getText());
+                    double dailyConsumption = (appliancePowerUse/1000) * dailyUseTime;
                     String tariff = tariffComboBox.getValue();
-                    Double dailyConsumption = (appliancePowerUse/1000) * dailyUseTime;
                     Appliance appliance = new Appliance.ApplianceBuilder().category(category).month(month)
                             .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
                             .dailyConsumption(dailyConsumption).build();

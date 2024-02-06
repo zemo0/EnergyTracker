@@ -3,7 +3,7 @@ package com.models;
 import javafx.fxml.FXML;
 import java.util.List;
 import com.utils.DatabaseUtils;
-public class Appliance {
+public class Appliance{
     private Long id;
     private Category applianceCategory;
     private String month;
@@ -123,7 +123,6 @@ public class Appliance {
     public void setMonth(String month) {
         this.month = month;
     }
-
     @Override
     public String toString() {
         return "Appliance{" +
