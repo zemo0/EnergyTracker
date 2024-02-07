@@ -32,9 +32,6 @@ import static com.mainPackage.Main.logger;
  *
  * svaka klasa mora bit svoj meni
  * nemoj komplicirat zasad, napravi sve kako zahtijeva i onda dodavaj nove stvari
- *
- * Bill ima mapu za svaki mjesec, u mapu se dodaju troškovi i dailycost se treba dodati u Appliance klasu kao varijabla
- * da bi ju mogao ispisati u billu za svaki appliance batonga
  * Napravit funkciju koja zbraja dupliakte i ubaci ih u bazu
  * Saznati što napraviti kao generičnu klasu
  *

@@ -51,19 +51,24 @@
                <Insets right="20.0" />
             </GridPane.margin>
          </Label>
-         <Button mnemonicParsing="false" prefWidth="70.0" text="Prikaži" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+         <Button mnemonicParsing="false" onAction="#showByMonth" prefWidth="70.0" text="Prikaži" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
             <font>
                <Font size="15.0" />
             </font>
          </Button>
-         <TableView maxWidth="850.0" prefHeight="200.0" prefWidth="850.0" GridPane.columnSpan="4" GridPane.rowIndex="3" GridPane.rowSpan="5">
+         <TableView fx:id="appliancesTableView" maxWidth="850.0" prefHeight="200.0" prefWidth="850.0" GridPane.columnSpan="4" GridPane.rowIndex="3" GridPane.rowSpan="4">
            <columns>
              <TableColumn fx:id="categoryNameTableColumn" prefWidth="212.0" text="Ime trošila" />
-             <TableColumn fx:id="dailyConsumptionTableColumn" prefWidth="213.0" text="Ukupna potrošnja" />
+             <TableColumn fx:id="dailyConsumptionTableColumn" prefWidth="213.0" text="Ukupna potrošnja(kWh)" />
                <TableColumn fx:id="tariffTableColumn" prefWidth="212.0" text="Tarifa" />
-               <TableColumn fx:id="dailyCostTableColumn" prefWidth="212.0" text="Ukupna cijena" />
+               <TableColumn fx:id="dailyCostTableColumn" prefWidth="212.0" text="Ukupna cijena(€)" />
            </columns>
          </TableView>
+         <Label fx:id="outputLabel" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+            <font>
+               <Font size="20.0" />
+            </font>
+         </Label>
       </children>
    </GridPane>
     

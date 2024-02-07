@@ -120,7 +120,8 @@ public class DatabaseUtils {
     public static void updateAppliance(Appliance appliance, Long id){
         try (Connection connection = connectToDatabase()) {
             String sqlQuery = "UPDATE APPLIANCE SET CATEGORY_ID = ?, MONTH_OF_USE = ?, " +
-                    "APPLIANCE_POWER_USE = ?, DAILY_USE_TIME = ?, TARIFF = ?, DAILY_CONSUMPTION = ? WHERE ID = ?";
+                    "APPLIANCE_POWER_USE = ?, DAILY_USE_TIME = ?, TARIFF = ?, DAILY_CONSUMPTION = ?, TOTAL_COST_OF_APPLIANCE = ?" +
+                    " WHERE ID = ?";
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
             pstmt.setLong(1, appliance.getApplianceCategory().getId());
             pstmt.setString(2, appliance.getMonth());
@@ -128,7 +129,8 @@ public class DatabaseUtils {
             pstmt.setDouble(4, appliance.getDailyUseTime());
             pstmt.setBoolean(5, appliance.getTariff());
             pstmt.setDouble(6, appliance.getDailyConsumption());
-            pstmt.setLong(7, id);
+            pstmt.setDouble(7, appliance.getTotalCostOfAppliance());
+            pstmt.setLong(8, id);
             pstmt.executeUpdate();
         } catch (SQLException | IOException ex) {
             logger.error("Greška pri ažuriranju kategorije u bazi podataka");
