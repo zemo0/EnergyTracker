@@ -62,9 +62,11 @@ public class DatabaseUtils {
                 Double dailyUseTime = rs.getDouble("DAILY_USE_TIME");
                 Boolean tariff = rs.getBoolean("TARIFF");
                 Double dailyConsumption = rs.getDouble("DAILY_CONSUMPTION");
+                Double totalCostOfAppliance = rs.getDouble("TOTAL_COST_OF_APPLIANCE");
                 Appliance appliance = new Appliance.ApplianceBuilder().id(id).categoryId(categoryId).month(month)
                         .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime)
-                        .tariff(tariff).dailyConsumption(dailyConsumption).build();
+                        .tariff(tariff).dailyConsumption(dailyConsumption).totalCostOfAppliance(totalCostOfAppliance)
+                        .build();
                 appliances.add(appliance);
             }
         } catch (SQLException | IOException ex){
@@ -87,7 +89,7 @@ public class DatabaseUtils {
     }
     public static void insertNewAppliance(Appliance appliance){
         try(Connection connection = connectToDatabase()){
-            String sqlQuery = "INSERT INTO APPLIANCE (CATEGORY_ID, MONTH_OF_USE, APPLIANCE_POWER_USE, DAILY_USE_TIME, TARIFF, DAILY_CONSUMPTION) VALUES (?, ?, ?, ?, ?, ?)";
+            String sqlQuery = "INSERT INTO APPLIANCE (CATEGORY_ID, MONTH_OF_USE, APPLIANCE_POWER_USE, DAILY_USE_TIME, TARIFF, DAILY_CONSUMPTION, TOTAL_COST_OF_APPLIANCE) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
             pstmt.setLong(1, Main.getCategoryId(appliance.getApplianceCategory()));
             pstmt.setString(2, appliance.getMonth());
@@ -95,6 +97,7 @@ public class DatabaseUtils {
             pstmt.setDouble(4, appliance.getDailyUseTime());
             pstmt.setBoolean(5, appliance.getTariff());
             pstmt.setDouble(6, appliance.getDailyConsumption());
+            pstmt.setDouble(7, appliance.getTotalCostOfAppliance());
             pstmt.executeUpdate();
         } catch (SQLException | IOException ex){
             logger.error("Greška pri unosu novog uređaja u bazu podataka");
@@ -168,9 +171,11 @@ public class DatabaseUtils {
                 Double dailyUseTime = rs.getDouble("DAILY_USE_TIME");
                 Boolean tariff = rs.getBoolean("TARIFF");
                 Double dailyConsumption = rs.getDouble("DAILY_CONSUMPTION");
+                Double totalCostOfAppliance = rs.getDouble("TOTAL_COST_OF_APPLIANCE");
                 Appliance appliance = new Appliance.ApplianceBuilder().id(id).categoryId(categoryId).month(Months.valueOf(month))
                         .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime)
-                        .tariff(tariff).dailyConsumption(dailyConsumption).build();
+                        .tariff(tariff).dailyConsumption(dailyConsumption).totalCostOfAppliance(totalCostOfAppliance)
+                        .build();
                 appliances.add(appliance);
             }
         } catch (SQLException | IOException ex) {

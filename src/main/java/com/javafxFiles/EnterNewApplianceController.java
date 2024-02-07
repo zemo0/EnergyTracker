@@ -1,5 +1,6 @@
 package com.javafxFiles;
 
+import com.models.ElectricityCost;
 import com.models.Months;
 import com.utils.DatabaseUtils;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
@@ -45,7 +46,6 @@ public class EnterNewApplianceController {
     private TableColumn<Appliance, String> applianceTariffTableColumn;
     @FXML
     private TableColumn<Appliance, Double> applianceDailyConsumptionTableColumn;
-
     public void initialize(){
         applianceCategoryTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Appliance, String>, ObservableValue<String>>() {
             @Override
@@ -100,9 +100,11 @@ public class EnterNewApplianceController {
         double dailyUseTime = Double.parseDouble(dailyUseTimeTextField.getText());
         Double dailyConsumption = (appliancePowerUse/1000) * dailyUseTime;
         String tariff = tariffComboBox.getValue();
+        Double totalCostOfAppliance = tariff.equals("Dnevna") ? dailyConsumption * ElectricityCost.DAILY_RATE : dailyConsumption * ElectricityCost.NIGHT_RATE;
         Appliance appliance = new Appliance.ApplianceBuilder().category(category).month(month)
                 .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
-                .dailyConsumption(dailyConsumption).build();
+                .dailyConsumption(dailyConsumption).totalCostOfAppliance(totalCostOfAppliance)
+                .build();
         DatabaseUtils.insertNewAppliance(appliance);
         clearFields();
     }
@@ -131,9 +133,11 @@ public class EnterNewApplianceController {
                     double dailyUseTime = Double.parseDouble(dailyUseTimeTextField.getText());
                     double dailyConsumption = (appliancePowerUse/1000) * dailyUseTime;
                     String tariff = tariffComboBox.getValue();
+                    double totalCostOfAppliance = tariff.equals("Dnevna") ? dailyConsumption * ElectricityCost.DAILY_RATE : dailyConsumption * ElectricityCost.NIGHT_RATE;
                     Appliance appliance = new Appliance.ApplianceBuilder().category(category).month(month)
                             .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
-                            .dailyConsumption(dailyConsumption).build();
+                            .dailyConsumption(dailyConsumption).totalCostOfAppliance(totalCostOfAppliance)
+                            .build();
                     DatabaseUtils.updateAppliance(appliance, selectedAppliance.getId());
                     List<Appliance> appliances = DatabaseUtils.getAllAppliances();//prikaz podataka nakon izmjene
                     ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);

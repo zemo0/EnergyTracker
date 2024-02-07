@@ -11,6 +11,7 @@ public class Appliance{
     private Double dailyUseTime;
     private Boolean tariff; //true = dnevna, false = nocna
     private Double dailyConsumption; // appPowerUse * dailyUseTime
+    private Double totalCostOfAppliance; // dailyConsumption * tariff
     public Appliance(ApplianceBuilder builder){
         this.id = builder.id;
         this.applianceCategory = builder.applianceCategory;
@@ -19,6 +20,7 @@ public class Appliance{
         this.dailyUseTime = builder.dailyUseTime;
         this.tariff = builder.tariff;
         this.dailyConsumption = builder.dailyConsumption;
+        this.totalCostOfAppliance = builder.totalCostOfAppliance;
     }
     public static class ApplianceBuilder{
         private Long id;
@@ -28,6 +30,7 @@ public class Appliance{
         private Double dailyUseTime;
         private Boolean tariff;
         private Double dailyConsumption;
+        private Double totalCostOfAppliance;
         public ApplianceBuilder id(Long id){
             this.id = id;
             return this;
@@ -63,6 +66,10 @@ public class Appliance{
         }
         public ApplianceBuilder dailyConsumption(Double dailyConsumption){
             this.dailyConsumption = dailyConsumption;
+            return this;
+        }
+        public ApplianceBuilder totalCostOfAppliance(Double totalCostOfAppliance){
+            this.totalCostOfAppliance = totalCostOfAppliance;
             return this;
         }
         public Appliance build(){return new Appliance(this);}
@@ -123,6 +130,15 @@ public class Appliance{
     public void setMonth(String month) {
         this.month = month;
     }
+
+    public Double getTotalCostOfAppliance() {
+        return totalCostOfAppliance;
+    }
+
+    public void setTotalCostOfAppliance(Double totalCostOfAppliance) {
+        this.totalCostOfAppliance = totalCostOfAppliance;
+    }
+
     @Override
     public String toString() {
         return "Appliance{" +
