@@ -1,5 +1,6 @@
 package com.javafxFiles;
 
+import com.mainPackage.Main;
 import com.models.ElectricityCost;
 import com.models.Months;
 import com.utils.DatabaseUtils;
@@ -105,8 +106,14 @@ public class EnterNewApplianceController {
                 .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
                 .dailyConsumption(dailyConsumption).totalCostOfAppliance(totalCostOfAppliance)
                 .build();
-        DatabaseUtils.insertNewAppliance(appliance);
-        clearFields();
+        if(Main.checkForDuplicateAppliances(appliance)) { //ako je uneseno trošilo duplikat
+            Main.addDuplicateAppliances(appliance);
+            clearFields();
+        } else {
+            DatabaseUtils.insertNewAppliance(appliance);
+            clearFields();
+        }
+
     }
     public void searchAppliance(){
         String searchApplianceText = searchApplianceTextField.getText();
