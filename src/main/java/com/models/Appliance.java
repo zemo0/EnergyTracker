@@ -1,5 +1,6 @@
 package com.models;
 
+import com.Threads.GetAllCategoriesThread;
 import javafx.fxml.FXML;
 import java.util.List;
 import com.utils.DatabaseUtils;
@@ -36,7 +37,8 @@ public class Appliance{
             return this;
         }
         public ApplianceBuilder categoryId(Long categoryId){
-            List<Category> categories = DatabaseUtils.getAllCategories();
+            GetAllCategoriesThread getAllCategoriesThread = new GetAllCategoriesThread();
+            List<Category> categories = getAllCategoriesThread.getAllCategories();
             for(Category category : categories){
                 if(category.getId().equals(categoryId)){
                     this.applianceCategory = category;

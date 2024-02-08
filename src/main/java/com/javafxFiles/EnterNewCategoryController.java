@@ -1,5 +1,6 @@
 package com.javafxFiles;
 
+import com.Threads.GetAllCategoriesThread;
 import com.models.Category;
 import com.utils.DatabaseUtils;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -42,7 +43,8 @@ public class EnterNewCategoryController {
                 return new ReadOnlyStringWrapper(categoryStringCellDataFeatures.getValue().getDescription());
             }
         });
-        List<Category> categories = DatabaseUtils.getAllCategories();
+        GetAllCategoriesThread getAllCategoriesThread = new GetAllCategoriesThread();
+        List<Category> categories = getAllCategoriesThread.getAllCategories();
         ObservableList<Category> observableCategories = FXCollections.observableArrayList(categories);
         categoryTableView.setItems(observableCategories);
     }
@@ -52,14 +54,16 @@ public class EnterNewCategoryController {
         String categoryDescription = categoryDescriptionTextField.getText();
         Category category = new Category.CategoryBuilder().name(categoryName).description(categoryDescription).build();
         DatabaseUtils.insertNewCategory(category);//unos nove kategorije
-        List<Category> categories = DatabaseUtils.getAllCategories();//prikaz uz dodanu kategoriju
+        GetAllCategoriesThread getAllCategoriesThread = new GetAllCategoriesThread();
+        List<Category> categories = getAllCategoriesThread.getAllCategories();
         ObservableList<Category> observableCategories = FXCollections.observableArrayList(categories);
         categoryTableView.setItems(observableCategories);
         clearFields();
     }
     public void searchCategory(){
         String searchCategory = searchCategoryTextField.getText();
-        List<Category> categories = DatabaseUtils.getAllCategories();
+        GetAllCategoriesThread getAllCategoriesThread = new GetAllCategoriesThread();
+        List<Category> categories = getAllCategoriesThread.getAllCategories();
         List<Category> sortedCategories = categories.stream()
                 .filter(category -> category.getName().contains(searchCategory)).toList();
         if(sortedCategories.isEmpty()){

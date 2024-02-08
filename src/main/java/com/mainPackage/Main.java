@@ -1,5 +1,7 @@
 package com.mainPackage;
 
+import com.Threads.GetAllAppliancesThread;
+import com.Threads.GetAllCategoriesThread;
 import com.models.Appliance;
 import com.models.Category;
 import com.utils.DatabaseUtils;
@@ -11,7 +13,8 @@ import java.util.Objects;
 public class Main {
     public static final Logger logger = LoggerFactory.getLogger(Main.class);
     public static Long getCategoryId(Category category){
-        List<Category> categories = DatabaseUtils.getAllCategories();
+        GetAllCategoriesThread getAllCategoriesThread = new GetAllCategoriesThread();
+        List<Category> categories = getAllCategoriesThread.getAllCategories();
         Long id = null;
         for(Category c : categories){
             if(c.getName().equals(category.getName())){
@@ -21,7 +24,8 @@ public class Main {
         return id;
     }
     public static Category getCategoryBasedOnName(String name){
-        List<Category> categories = DatabaseUtils.getAllCategories();
+        GetAllCategoriesThread getAllCategoriesThread = new GetAllCategoriesThread();
+        List<Category> categories = getAllCategoriesThread.getAllCategories();
         long id = 0;
         Category category = null;
         for(Category c : categories){
@@ -32,7 +36,8 @@ public class Main {
         return category;
     }
     public static void addDuplicateAppliances(Appliance appliance){
-        List<Appliance> appliances = DatabaseUtils.getAllAppliances();
+        GetAllAppliancesThread getAllAppliancesThread = new GetAllAppliancesThread();
+        List<Appliance> appliances = getAllAppliancesThread.getAllAppliances();
         for(Appliance a : appliances){
             if(a.getApplianceCategory().getName().equals(appliance.getApplianceCategory().getName()) &&
                     a.getTariff() == appliance.getTariff() &&
@@ -47,7 +52,8 @@ public class Main {
         }
     }
     public static boolean checkForDuplicateAppliances(Appliance appliance){
-        List<Appliance> appliances = DatabaseUtils.getAllAppliances();
+        GetAllAppliancesThread getAllAppliancesThread = new GetAllAppliancesThread();
+        List<Appliance> appliances = getAllAppliancesThread.getAllAppliances();
         for(Appliance a : appliances){
             if(a.getApplianceCategory().getName().equals(appliance.getApplianceCategory().getName()) &&
                     a.getTariff() == appliance.getTariff() &&

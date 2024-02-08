@@ -1,5 +1,7 @@
 package com.javafxFiles;
 
+import com.Threads.GetAllAppliancesThread;
+import com.Threads.GetAllCategoriesThread;
 import com.mainPackage.Main;
 import com.models.ElectricityCost;
 import com.models.Months;
@@ -84,7 +86,8 @@ public class EnterNewApplianceController {
                 return new ReadOnlyObjectWrapper<>(applianceDoubleCellDataFeatures.getValue().getDailyConsumption());
             }
         });
-        List<Category> categories = DatabaseUtils.getAllCategories();
+        GetAllCategoriesThread getAllCategoriesThread = new GetAllCategoriesThread();
+        List<Category> categories = getAllCategoriesThread.getAllCategories();
         ObservableList<Category> observableCategories = FXCollections.observableArrayList(categories);
         categoryComboBox.setItems(observableCategories);
         ObservableList<String> observableTariffs = FXCollections.observableArrayList("Dnevna", "Noćna");
@@ -117,7 +120,8 @@ public class EnterNewApplianceController {
     }
     public void searchAppliance(){
         String searchApplianceText = searchApplianceTextField.getText();
-        List<Appliance> appliances = DatabaseUtils.getAllAppliances();
+        GetAllAppliancesThread getAllAppliancesThread = new GetAllAppliancesThread();
+        List<Appliance> appliances = getAllAppliancesThread.getAllAppliances();
         List<Appliance> sortedAppliances = appliances.stream()
                 .filter(appliance -> appliance.getApplianceCategory().getName().contains(searchApplianceText)).toList();
         ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(sortedAppliances);
@@ -146,7 +150,8 @@ public class EnterNewApplianceController {
                             .dailyConsumption(dailyConsumption).totalCostOfAppliance(totalCostOfAppliance)
                             .build();
                     DatabaseUtils.updateAppliance(appliance, selectedAppliance.getId());
-                    List<Appliance> appliances = DatabaseUtils.getAllAppliances();//prikaz podataka nakon izmjene
+                    GetAllAppliancesThread getAllAppliancesThread = new GetAllAppliancesThread();
+                    List<Appliance> appliances = getAllAppliancesThread.getAllAppliances();
                     ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);
                     applianceTableView.setItems(observableAppliances);
                     clearFields();
@@ -180,7 +185,8 @@ public class EnterNewApplianceController {
             confirmationDialog.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     DatabaseUtils.deleteAppliance(selectedAppliance);
-                    List<Appliance> appliances = DatabaseUtils.getAllAppliances();
+                    GetAllAppliancesThread getAllAppliancesThread = new GetAllAppliancesThread();
+                    List<Appliance> appliances = getAllAppliancesThread.getAllAppliances();
                     ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);
                     applianceTableView.setItems(observableAppliances);
                     clearFields();
