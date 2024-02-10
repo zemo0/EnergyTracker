@@ -1,5 +1,7 @@
 package com.javafxFiles;
 
+import com.Exceptions.FileNotCorrectException;
+import com.Exceptions.InvalidCredentialsException;
 import com.models.Role;
 import com.utils.FileUtils;
 import javafx.fxml.FXML;
@@ -10,7 +12,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
+
+import static com.mainPackage.Main.logger;
 
 public class LoginController {
     @FXML
@@ -18,16 +23,21 @@ public class LoginController {
     @FXML
     private PasswordField passwordTextField;
     public void loginButton(){
-        Set<Role> racuni = FileUtils.dohvatPodatakaORacunima();
+        Set<Role> racuni = new HashSet<>();
+        try {
+            racuni = FileUtils.dohvatPodatakaORacunima();
+        } catch (FileNotCorrectException e) {
+            e.printStackTrace();
+            logger.info("Datoteka s korisnicima nije ispravna, nedostaje neki podatak");
+        }
         String usernameTextFieldText = usernameTextField.getText();
         String passwordPasswordFieldText = passwordTextField.getText();
         boolean areTextFieldsEqual = false;
-        for(Role role : racuni){
-            if (role.getUsername().equals(usernameTextFieldText) &&
-                    role.getPassword().equals(passwordPasswordFieldText)) {
-                areTextFieldsEqual = true;
-                break;
-            }
+        try {
+            areTextFieldsEqual = checkIfUserExists(usernameTextFieldText, passwordPasswordFieldText, racuni);
+        } catch (InvalidCredentialsException e) {
+            e.printStackTrace();
+            logger.info("Krivo uneseni podatci za prijavu u sustav.");
         }
         if(areTextFieldsEqual){
             showMainScreen();
@@ -44,6 +54,20 @@ public class LoginController {
             alert.setContentText("Molimo Vas da unesete ispravne podatke za ulaz u sustav.");
             alert.showAndWait();
         }
+    }
+    public boolean checkIfUserExists(String usernameTextFieldText, String passwordTextFieldText, Set<Role> racuni) throws InvalidCredentialsException {
+        boolean areTextFieldsEqual = false;
+        for(Role role : racuni){
+            if (role.getUsername().equals(usernameTextFieldText) &&
+                    role.getPassword().equals(passwordTextFieldText)) {
+                areTextFieldsEqual = true;
+                break;
+            }
+        }
+        if(!areTextFieldsEqual){
+            throw new InvalidCredentialsException("Krivo uneseni podatci za prijavu u sustav.");
+        }
+        return areTextFieldsEqual;
     }
     public void showCreateNewAccountScreen(){
         FXMLLoader fxmlLoader =

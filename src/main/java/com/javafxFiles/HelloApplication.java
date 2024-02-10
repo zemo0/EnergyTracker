@@ -32,7 +32,6 @@ import static com.mainPackage.Main.logger;
  *
  * svaka klasa mora bit svoj meni
  * nemoj komplicirat zasad, napravi sve kako zahtijeva i onda dodavaj nove stvari
- * Napravit funkciju koja zbraja dupliakte i ubaci ih u bazu
  * Saznati što napraviti kao generičnu klasu
  *
  */

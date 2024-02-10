@@ -1,5 +1,8 @@
 package com.javafxFiles;
 
+import com.Exceptions.DuplicateUserException;
+import com.Exceptions.FileNotCorrectException;
+import com.Exceptions.InvalidCredentialsException;
 import com.models.Admin;
 import com.models.User;
 import com.models.Role;
@@ -12,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,13 +47,20 @@ public class CreateNewAccountScreenController {
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
         String role = roleSelectorComboBox.getValue();
-        Set<Role> racuni = FileUtils.dohvatPodatakaORacunima();
+        Set<Role> racuni = new HashSet<>();
+        try {
+            racuni = FileUtils.dohvatPodatakaORacunima();
+        } catch (FileNotCorrectException e) {
+            e.printStackTrace();
+            logger.info("Datoteka s korisnicima nije ispravna, nedostaje neki podatak");
+        }
         boolean areTextFieldsEqual = false;
-        for(Role bill : racuni){
-            if (bill.getUsername().equals(username) && bill.getPassword().equals(password)) {
-                areTextFieldsEqual = true;
-                break;
-            }
+        try {
+            areTextFieldsEqual = checkIfUserExists(username, password, racuni);
+        } catch (DuplicateUserException e) {
+            areTextFieldsEqual = true;
+            e.printStackTrace();
+            logger.info("Korisnik kojeg pokušavate kreirati već postoji u sustavu");
         }
         if(areTextFieldsEqual){
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -94,6 +105,19 @@ public class CreateNewAccountScreenController {
                 logger.info("Došlo je do greške pri zapisu novih korisnika u file");
             }
         }
+    }
+    public boolean checkIfUserExists(String username, String password, Set<Role> racuni) throws DuplicateUserException{
+        boolean areTextFieldsEqual = false;
+        for(Role bill : racuni){
+            if (bill.getUsername().equals(username) && bill.getPassword().equals(password)) {
+                areTextFieldsEqual = true;
+                break;
+            }
+        }
+        if(areTextFieldsEqual){
+            throw new DuplicateUserException("Taj korisnik već postoji u sustavu.");
+        }
+        return areTextFieldsEqual;
     }
 
     public void showLoginScreen(){

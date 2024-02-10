@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.Exceptions.DatabaseConnectionException;
 import com.mainPackage.Main;
 import com.models.Appliance;
 import com.models.Category;
@@ -16,14 +17,17 @@ import static com.mainPackage.Main.logger;
 
 public class DatabaseUtils {
     private static final String DATABASE_PROPERTIES = "properties/database.properties";
-    private static Connection connectToDatabase() throws SQLException, IOException {
+    private static Connection connectToDatabase() throws SQLException, IOException, DatabaseConnectionException {
         Properties properties = new Properties();
         properties.load(new FileReader(DATABASE_PROPERTIES));
         String databaseUrl = properties.getProperty("databaseUrl");
         String username = properties.getProperty("username");
         String password = properties.getProperty("password");
-        Connection connection = DriverManager.getConnection(databaseUrl, username, password);
-        return connection;
+        try {
+            return DriverManager.getConnection(databaseUrl, username, password);
+        } catch (SQLException ex) {
+            throw new DatabaseConnectionException("Greška pri spajanju na bazu podataka", ex);
+        }
     }
     public static List<Category> getAllCategories(){
         List<Category> categories = new ArrayList<>();
@@ -40,7 +44,7 @@ public class DatabaseUtils {
                 Category category = new Category.CategoryBuilder().id(id).name(name).description(description).build();
                 categories.add(category);
             }
-        } catch (SQLException | IOException ex){
+        } catch (SQLException | IOException | DatabaseConnectionException ex){
             logger.error("Greška pri spajanju na bazu podataka");
             ex.printStackTrace();
         }
@@ -69,7 +73,7 @@ public class DatabaseUtils {
                         .build();
                 appliances.add(appliance);
             }
-        } catch (SQLException | IOException ex){
+        } catch (SQLException | IOException | DatabaseConnectionException ex){
             logger.info("Greška pri dohvaćanju svih uređaja iz baze podataka");
             ex.printStackTrace();
         }
@@ -82,7 +86,7 @@ public class DatabaseUtils {
             pstmt.setString(1, category.getName());
             pstmt.setString(2, category.getDescription());
             pstmt.executeUpdate();
-        } catch (SQLException | IOException ex){
+        } catch (SQLException | IOException | DatabaseConnectionException ex){
             logger.error("Greška pri unosu nove kategorije u bazu podataka");
             ex.printStackTrace();
         }
@@ -99,7 +103,7 @@ public class DatabaseUtils {
             pstmt.setDouble(6, appliance.getDailyConsumption());
             pstmt.setDouble(7, appliance.getTotalCostOfAppliance());
             pstmt.executeUpdate();
-        } catch (SQLException | IOException ex){
+        } catch (SQLException | IOException | DatabaseConnectionException ex){
             logger.error("Greška pri unosu novog uređaja u bazu podataka");
             ex.printStackTrace();
         }
@@ -112,7 +116,7 @@ public class DatabaseUtils {
             pstmt.setString(2, category.getDescription());
             pstmt.setLong(3, id);
             pstmt.executeUpdate();
-        } catch (SQLException | IOException ex) {
+        } catch (SQLException | IOException | DatabaseConnectionException ex) {
             logger.error("Greška pri ažuriranju kategorije u bazi podataka");
             ex.printStackTrace();
         }
@@ -132,7 +136,7 @@ public class DatabaseUtils {
             pstmt.setDouble(7, appliance.getTotalCostOfAppliance());
             pstmt.setLong(8, id);
             pstmt.executeUpdate();
-        } catch (SQLException | IOException ex) {
+        } catch (SQLException | IOException | DatabaseConnectionException ex) {
             logger.error("Greška pri ažuriranju kategorije u bazi podataka");
             ex.printStackTrace();
         }
@@ -143,7 +147,7 @@ public class DatabaseUtils {
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
             pstmt.setLong(1, category.getId());
             pstmt.executeUpdate();
-        } catch (SQLException | IOException ex) {
+        } catch (SQLException | IOException | DatabaseConnectionException ex) {
             logger.error("Greška pri brisanju kategorije iz baze podataka");
             ex.printStackTrace();
         }
@@ -154,7 +158,7 @@ public class DatabaseUtils {
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
             pstmt.setLong(1, appliance.getId());
             pstmt.executeUpdate();
-        } catch (SQLException | IOException ex) {
+        } catch (SQLException | IOException | DatabaseConnectionException ex) {
             logger.error("Greška pri brisanju uređaja iz baze podataka");
             ex.printStackTrace();
         }
@@ -180,7 +184,7 @@ public class DatabaseUtils {
                         .build();
                 appliances.add(appliance);
             }
-        } catch (SQLException | IOException ex) {
+        } catch (SQLException | IOException | DatabaseConnectionException ex) {
             logger.error("Greška pri brisanju uređaja iz baze podataka");
             ex.printStackTrace();
         }

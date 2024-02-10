@@ -1,5 +1,6 @@
 package com.utils;
 
+import com.Exceptions.FileNotCorrectException;
 import com.javafxFiles.CreateNewAccountScreenController;
 import com.models.Admin;
 import com.models.User;
@@ -15,12 +16,13 @@ import static com.mainPackage.Main.logger;
 
 public class FileUtils {
     public static final String serializationFileName = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\racuni.dat";
-    public static Set<Role> dohvatPodatakaORacunima(){
+    public static Set<Role> dohvatPodatakaORacunima() throws FileNotCorrectException {
         String filePath = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\loginInfo.txt";
         Set<Role> racuni = new HashSet<>();
         String username, password, role;
         try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             long numberOfLines = Files.lines(Paths.get(filePath)).count();
+            if(numberOfLines % 3 != 0){ throw new FileNotCorrectException("Datoteka nije ispravna");}
             for(int i = 0; i < numberOfLines/3; i++){
                 role = reader.readLine();
                 username = reader.readLine();
