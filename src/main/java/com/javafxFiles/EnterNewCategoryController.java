@@ -1,8 +1,10 @@
 package com.javafxFiles;
 
+import com.Serialization.CategorySerialization;
 import com.Threads.GetAllCategoriesThread;
 import com.models.Category;
 import com.utils.DatabaseUtils;
+import com.utils.FileUtils;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.mainPackage.Main.logger;
@@ -30,6 +33,7 @@ public class EnterNewCategoryController {
     private TableColumn<Category, String> categoryDescriptionTableColumn;
     @FXML
     private Button changeCategoryButton;
+    private CategorySerialization categorySerialization = new CategorySerialization();
     public void initialize(){
         categoryNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Category, String>, ObservableValue<String>>() {
             @Override
@@ -59,6 +63,11 @@ public class EnterNewCategoryController {
         ObservableList<Category> observableCategories = FXCollections.observableArrayList(categories);
         categoryTableView.setItems(observableCategories);
         clearFields();
+        categorySerialization.addCategoryBeforeChange(null);
+        categorySerialization.addCategoryAfterChange(category);
+        categorySerialization.addChangeInCategories("Unos nove kategorije");
+        categorySerialization.addTimeOfChange(java.time.LocalDateTime.now());
+        FileUtils.serializeCategories(categorySerialization);
     }
     public void searchCategory(){
         String searchCategory = searchCategoryTextField.getText();
@@ -122,6 +131,11 @@ public class EnterNewCategoryController {
                 logger.info("Promjena podataka kategorije nije potvrđena");
             }
         });
+        GetAllCategoriesThread getAllCategoriesThread = new GetAllCategoriesThread();
+        List<Category> categories = getAllCategoriesThread.getAllCategories();
+        ObservableList<Category> observableCategories = FXCollections.observableArrayList(categories);
+        categoryTableView.setItems(observableCategories);
+        System.out.println(FileUtils.deserializeCategories());
     }
     public void clearFields(){
         categoryNameTextField.clear();

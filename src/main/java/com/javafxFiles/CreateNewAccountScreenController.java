@@ -2,7 +2,6 @@ package com.javafxFiles;
 
 import com.Exceptions.DuplicateUserException;
 import com.Exceptions.FileNotCorrectException;
-import com.Exceptions.InvalidCredentialsException;
 import com.models.Admin;
 import com.models.User;
 import com.models.Role;
@@ -15,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ import static com.mainPackage.Main.logger;
 
 public class CreateNewAccountScreenController {
     public static Integer changeCounter = 0;
-    private Set<Role> promjene = new HashSet<>();
+    private Set<Role> changesInRoles = new HashSet<>();
     @FXML
     private ComboBox<String> roleSelectorComboBox;
     @FXML
@@ -88,7 +86,7 @@ public class CreateNewAccountScreenController {
                         .setPassword(password).build();
             }
             racuni.add(bill);
-            promjene.add(bill);
+            changesInRoles.add(bill);
             //spremanje novog podatka kao korisnik
             String filePath = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\loginInfo.txt";
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))){
@@ -134,8 +132,8 @@ public class CreateNewAccountScreenController {
 
         HelloApplication.getStage().setScene(scene);
         HelloApplication.getStage().show();
-        FileUtils.serializeRacune(promjene);
-        changeCounter = promjene.size();
+        FileUtils.serializeRacune(changesInRoles);
+        changeCounter = changesInRoles.size();
         System.out.println(FileUtils.deserializeRacune());
     }
 }

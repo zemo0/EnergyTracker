@@ -1,21 +1,27 @@
 package com.utils;
 
 import com.Exceptions.FileNotCorrectException;
+import com.Serialization.CategorySerialization;
 import com.javafxFiles.CreateNewAccountScreenController;
+import com.javafxFiles.EnterNewCategoryController;
 import com.models.Admin;
+import com.models.Category;
 import com.models.User;
 import com.models.Role;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static com.mainPackage.Main.logger;
 
 public class FileUtils {
-    public static final String serializationFileName = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\racuni.dat";
+    public static final String serializeRolesFileName = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\racuni.dat";
+    public static final String serializeCategoriesFileName = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\racuni.dat";
     public static Set<Role> dohvatPodatakaORacunima() throws FileNotCorrectException {
         String filePath = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\loginInfo.txt";
         Set<Role> racuni = new HashSet<>();
@@ -60,7 +66,7 @@ public class FileUtils {
         return hashed.toString();
     }
     public static void serializeRacune(Set<Role> racuni){
-        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(serializationFileName))){
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(serializeRolesFileName))){
             for(Role role : racuni) {
                 out.writeObject(role);
             }
@@ -71,7 +77,7 @@ public class FileUtils {
     }
     public static Set<Role> deserializeRacune(){
         Set<Role> roles = new HashSet<>();
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(serializationFileName))) {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(serializeRolesFileName))) {
             for(int i = 0; i < CreateNewAccountScreenController.changeCounter; i++) {
                 Role role = (Role) in.readObject();
                 roles.add(role);
@@ -85,5 +91,26 @@ public class FileUtils {
         }
 
         return roles;
+    }
+    public static void serializeCategories(CategorySerialization categorySerialization){
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(serializeCategoriesFileName))){
+            out.writeObject(categorySerialization);
+        } catch(IOException ex){
+            ex.printStackTrace();
+            logger.info("Greška kod serijaliziranja kategorija");
+        }
+    }
+    public static CategorySerialization deserializeCategories(){
+        CategorySerialization categorySerialized = new CategorySerialization();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(serializeCategoriesFileName))) {
+            categorySerialized = (CategorySerialization) in.readObject();
+        } catch (EOFException e) {
+            // End of file reached, do nothing
+            logger.info("EOFException jer je kod deserijalizacije filea kod došao do kraja filea");
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace(); // or log the error
+            logger.info("Kod deserijalizacije je došlo do greške pri čitanju ili nije nađena prava klasa");
+        }
+        return categorySerialized;
     }
 }
