@@ -27,7 +27,7 @@
                </items></Menu>
             <Menu mnemonicParsing="false" text="Promjene">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Brisanje uređaja" />
+                  <MenuItem mnemonicParsing="false" onAction="#showChangesScreen" text="Pregled promjena" />
                </items>
             </Menu>
         </menus>

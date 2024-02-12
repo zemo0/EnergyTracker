@@ -6,7 +6,6 @@ public abstract class Role implements Serializable {
     private String username;
     private String password;
     private String role;
-
     public Role(String username, String password, String role){
         this.username = username;
         this.password = password;
@@ -39,6 +38,7 @@ public abstract class Role implements Serializable {
 
     @Override
     public String toString() {
-        return "username='" + username + "role = " + role + '\'';
+        return "Username='" + username + '\''+
+                ", role='" + role + '\'';
     }
 }

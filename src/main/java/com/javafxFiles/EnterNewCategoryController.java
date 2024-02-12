@@ -94,7 +94,17 @@ public class EnterNewCategoryController {
                     String categoryName = categoryNameTextField.getText();
                     String categoryDescription = categoryDescriptionTextField.getText();
                     Category category = new Category.CategoryBuilder().name(categoryName).description(categoryDescription).build();
-                    DatabaseUtils.updateCategory(category, selectedCategory.getId());
+                    //serijalizacija
+                    categorySerialization.addCategoryBeforeChange(selectedCategory);
+                    categorySerialization.addCategoryAfterChange(category);
+                    categorySerialization.addChangeInCategories("Izmjena kategorije");
+                    categorySerialization.addTimeOfChange(java.time.LocalDateTime.now());
+                    FileUtils.serializeCategories(categorySerialization);
+                    DatabaseUtils.updateCategory(category, selectedCategory.getId()); // izmjena
+                    GetAllCategoriesThread getAllCategoriesThread = new GetAllCategoriesThread();
+                    List<Category> categories = getAllCategoriesThread.getAllCategories();
+                    ObservableList<Category> observableCategories = FXCollections.observableArrayList(categories);
+                    categoryTableView.setItems(observableCategories);
                 } else {
                     logger.info("Promjena podataka kategorije nije potvrđena");
                 }
@@ -125,6 +135,11 @@ public class EnterNewCategoryController {
         confirmationDialog.setContentText("Stisnite OK za potvrdu");
         confirmationDialog.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
+                categorySerialization.addCategoryBeforeChange(selectedCategory);//serijalizacija
+                categorySerialization.addCategoryAfterChange(null);
+                categorySerialization.addChangeInCategories("Brisanje kategorije");
+                categorySerialization.addTimeOfChange(java.time.LocalDateTime.now());
+                FileUtils.serializeCategories(categorySerialization);
                 DatabaseUtils.deleteCategory(selectedCategory);
                 clearFields();
             } else {
@@ -135,7 +150,6 @@ public class EnterNewCategoryController {
         List<Category> categories = getAllCategoriesThread.getAllCategories();
         ObservableList<Category> observableCategories = FXCollections.observableArrayList(categories);
         categoryTableView.setItems(observableCategories);
-        System.out.println(FileUtils.deserializeCategories());
     }
     public void clearFields(){
         categoryNameTextField.clear();

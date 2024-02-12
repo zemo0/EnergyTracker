@@ -30,6 +30,37 @@ public class CategorySerialization implements Serializable {
     public void addTimeOfChange(LocalDateTime time){
         timeOfChange.add(time);
     }
+    public List<String> getChangeInCategories() {
+        return changeInCategories;
+    }
+
+    public void setChangeInCategories(List<String> changeInCategories) {
+        this.changeInCategories = changeInCategories;
+    }
+
+    public List<Category> getCategoriesBeforeChange() {
+        return categoriesBeforeChange;
+    }
+
+    public void setCategoriesBeforeChange(List<Category> categoriesBeforeChange) {
+        this.categoriesBeforeChange = categoriesBeforeChange;
+    }
+
+    public List<Category> getCategoriesAfterChange() {
+        return categoriesAfterChange;
+    }
+
+    public void setCategoriesAfterChange(List<Category> categoriesAfterChange) {
+        this.categoriesAfterChange = categoriesAfterChange;
+    }
+
+    public List<LocalDateTime> getTimeOfChange() {
+        return timeOfChange;
+    }
+
+    public void setTimeOfChange(List<LocalDateTime> timeOfChange) {
+        this.timeOfChange = timeOfChange;
+    }
 
     @Override
     public String toString() {

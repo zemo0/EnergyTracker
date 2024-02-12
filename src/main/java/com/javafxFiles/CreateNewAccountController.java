@@ -23,7 +23,7 @@ import java.util.Set;
 
 import static com.mainPackage.Main.logger;
 
-public class CreateNewAccountScreenController {
+public class CreateNewAccountController {
     public static Integer changeCounter = 0;
     private Set<Role> changesInRoles = new HashSet<>();
     @FXML

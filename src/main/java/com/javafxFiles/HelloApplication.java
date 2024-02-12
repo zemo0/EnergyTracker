@@ -34,6 +34,8 @@ import static com.mainPackage.Main.logger;
  * nemoj komplicirat zasad, napravi sve kako zahtijeva i onda dodavaj nove stvari
  * Saznati što napraviti kao generičnu klasu
  * serijalizirati promjene i ispisati ih u novi screen
+ * BUG kad brises kategoriju koja postoji u appliiance
+ * BUG kod promjene treba ispisati i opis kategorije a ne samo ime
  *
  */
 

@@ -1,11 +1,13 @@
 package com.javafxFiles;
 
+import com.Serialization.ApplianceSerialization;
 import com.Threads.GetAllAppliancesThread;
 import com.Threads.GetAllCategoriesThread;
 import com.mainPackage.Main;
 import com.models.ElectricityCost;
 import com.models.Months;
 import com.utils.DatabaseUtils;
+import com.utils.FileUtils;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -18,6 +20,7 @@ import com.models.Category;
 import com.models.Appliance;
 import javafx.util.Callback;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.mainPackage.Main.logger;
@@ -49,6 +52,7 @@ public class EnterNewApplianceController {
     private TableColumn<Appliance, String> applianceTariffTableColumn;
     @FXML
     private TableColumn<Appliance, Double> applianceDailyConsumptionTableColumn;
+    private ApplianceSerialization applianceSerialization = new ApplianceSerialization();
     public void initialize(){
         applianceCategoryTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Appliance, String>, ObservableValue<String>>() {
             @Override
@@ -109,6 +113,11 @@ public class EnterNewApplianceController {
                 .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
                 .dailyConsumption(dailyConsumption).totalCostOfAppliance(totalCostOfAppliance)
                 .build();
+        applianceSerialization.addChangeInAppliances("Unos novog trošila");
+        applianceSerialization.addApplianceBeforeChange(null);
+        applianceSerialization.addApplianceAfterChange(appliance);
+        applianceSerialization.addTimeOfChange(LocalDateTime.now());
+        FileUtils.serializeAppliances(applianceSerialization);
         if(Main.checkForDuplicateAppliances(appliance)) { //ako je uneseno trošilo duplikat
             Main.addDuplicateAppliances(appliance);
             clearFields();
@@ -120,8 +129,7 @@ public class EnterNewApplianceController {
     }
     public void searchAppliance(){
         String searchApplianceText = searchApplianceTextField.getText();
-        GetAllAppliancesThread getAllAppliancesThread = new GetAllAppliancesThread();
-        List<Appliance> appliances = getAllAppliancesThread.getAllAppliances();
+        List<Appliance> appliances = DatabaseUtils.getAllAppliances();
         List<Appliance> sortedAppliances = appliances.stream()
                 .filter(appliance -> appliance.getApplianceCategory().getName().contains(searchApplianceText)).toList();
         ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(sortedAppliances);
@@ -149,9 +157,13 @@ public class EnterNewApplianceController {
                             .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
                             .dailyConsumption(dailyConsumption).totalCostOfAppliance(totalCostOfAppliance)
                             .build();
+                    applianceSerialization.addChangeInAppliances("Promjena trošila");
+                    applianceSerialization.addApplianceBeforeChange(selectedAppliance);
+                    applianceSerialization.addApplianceAfterChange(appliance);
+                    applianceSerialization.addTimeOfChange(LocalDateTime.now());
+                    FileUtils.serializeAppliances(applianceSerialization);
                     DatabaseUtils.updateAppliance(appliance, selectedAppliance.getId());
-                    GetAllAppliancesThread getAllAppliancesThread = new GetAllAppliancesThread();
-                    List<Appliance> appliances = getAllAppliancesThread.getAllAppliances();
+                    List<Appliance> appliances = DatabaseUtils.getAllAppliances();
                     ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);
                     applianceTableView.setItems(observableAppliances);
                     clearFields();
@@ -184,9 +196,13 @@ public class EnterNewApplianceController {
             confirmationDialog.setContentText("Stisnite OK za potvrdu");
             confirmationDialog.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
+                    applianceSerialization.addChangeInAppliances("Brisanje trošila");
+                    applianceSerialization.addApplianceBeforeChange(selectedAppliance);
+                    applianceSerialization.addApplianceAfterChange(null);
+                    applianceSerialization.addTimeOfChange(LocalDateTime.now());
+                    FileUtils.serializeAppliances(applianceSerialization);
                     DatabaseUtils.deleteAppliance(selectedAppliance);
-                    GetAllAppliancesThread getAllAppliancesThread = new GetAllAppliancesThread();
-                    List<Appliance> appliances = getAllAppliancesThread.getAllAppliances();
+                    List<Appliance> appliances = DatabaseUtils.getAllAppliances();
                     ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);
                     applianceTableView.setItems(observableAppliances);
                     clearFields();

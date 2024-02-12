@@ -1,6 +1,7 @@
 package com.javafxFiles;
 
 import com.utils.DatabaseUtils;
+import com.utils.FileUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
@@ -39,6 +40,20 @@ public class MenuBarController {
         FXMLLoader fxmlLoader =
                 new FXMLLoader(HelloApplication.class.getResource(
                         "billScreen.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 850, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HelloApplication.getStage().setScene(scene);
+        HelloApplication.getStage().show();
+    }
+    public void showChangesScreen() {
+        FXMLLoader fxmlLoader =
+                new FXMLLoader(HelloApplication.class.getResource(
+                        "changesScreen.fxml"));
         Scene scene = null;
         try {
             scene = new Scene(fxmlLoader.load(), 850, 600);

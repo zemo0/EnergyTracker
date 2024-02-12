@@ -52,8 +52,7 @@ public class Main {
         }
     }
     public static boolean checkForDuplicateAppliances(Appliance appliance){
-        GetAllAppliancesThread getAllAppliancesThread = new GetAllAppliancesThread();
-        List<Appliance> appliances = getAllAppliancesThread.getAllAppliances();
+        List<Appliance> appliances = DatabaseUtils.getAllAppliances();
         for(Appliance a : appliances){
             if(a.getApplianceCategory().getName().equals(appliance.getApplianceCategory().getName()) &&
                     a.getTariff() == appliance.getTariff() &&

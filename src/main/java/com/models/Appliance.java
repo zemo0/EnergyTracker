@@ -2,9 +2,11 @@ package com.models;
 
 import com.Threads.GetAllCategoriesThread;
 import javafx.fxml.FXML;
+
+import java.io.Serializable;
 import java.util.List;
 import com.utils.DatabaseUtils;
-public class Appliance{
+public class Appliance implements Serializable {
     private Long id;
     private Category applianceCategory;
     private String month;
@@ -143,14 +145,11 @@ public class Appliance{
 
     @Override
     public String toString() {
-        return "Appliance{" +
-                "id=" + id +
-                ", applianceCategory=" + applianceCategory +
+        return "ApplianceCategory=" + applianceCategory +
                 ", month='" + month + '\'' +
                 ", appliancePowerUse=" + appliancePowerUse +
                 ", dailyUseTime=" + dailyUseTime +
                 ", tariff=" + tariff +
-                ", dailyConsumption=" + dailyConsumption +
-                '}';
+                ", dailyConsumption=" + dailyConsumption;
     }
 }

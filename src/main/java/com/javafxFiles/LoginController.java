@@ -22,6 +22,7 @@ public class LoginController {
     private TextField usernameTextField;
     @FXML
     private PasswordField passwordTextField;
+    public static Role currentUser;
     public void loginButton(){
         Set<Role> racuni = new HashSet<>();
         try {
@@ -40,6 +41,7 @@ public class LoginController {
             logger.info("Krivo uneseni podatci za prijavu u sustav.");
         }
         if(areTextFieldsEqual){
+            currentUser = racuni.stream().filter(role -> role.getUsername().equals(usernameTextFieldText)).findFirst().get();
             showMainScreen();
         } else if(usernameTextFieldText.isEmpty() || passwordPasswordFieldText.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.WARNING);
