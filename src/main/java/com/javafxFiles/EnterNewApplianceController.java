@@ -1,14 +1,13 @@
 package com.javafxFiles;
 
+import com.FileUtilsThreads.SerializeAppliancesThread;
 import com.Serialization.ApplianceSerialization;
-import com.Threads.GetAllAppliancesThread;
-import com.Threads.GetAllCategoriesThread;
+import com.DatabaseThreads.GetAllCategoriesThread;
 import com.mainPackage.Main;
 import com.models.ElectricityCost;
 import com.models.Months;
 import com.utils.DatabaseUtils;
 import com.utils.FileUtils;
-import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -117,7 +116,8 @@ public class EnterNewApplianceController {
         applianceSerialization.addApplianceBeforeChange(null);
         applianceSerialization.addApplianceAfterChange(appliance);
         applianceSerialization.addTimeOfChange(LocalDateTime.now());
-        FileUtils.serializeAppliances(applianceSerialization);
+        SerializeAppliancesThread serializeAppliancesThread = new SerializeAppliancesThread(applianceSerialization);
+        serializeAppliancesThread.serializeAppliances(applianceSerialization);
         if(Main.checkForDuplicateAppliances(appliance)) { //ako je uneseno trošilo duplikat
             Main.addDuplicateAppliances(appliance);
             clearFields();
@@ -161,7 +161,8 @@ public class EnterNewApplianceController {
                     applianceSerialization.addApplianceBeforeChange(selectedAppliance);
                     applianceSerialization.addApplianceAfterChange(appliance);
                     applianceSerialization.addTimeOfChange(LocalDateTime.now());
-                    FileUtils.serializeAppliances(applianceSerialization);
+                    SerializeAppliancesThread serializeAppliancesThread = new SerializeAppliancesThread(applianceSerialization);
+                    serializeAppliancesThread.serializeAppliances(applianceSerialization);
                     DatabaseUtils.updateAppliance(appliance, selectedAppliance.getId());
                     List<Appliance> appliances = DatabaseUtils.getAllAppliances();
                     ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);
@@ -200,7 +201,8 @@ public class EnterNewApplianceController {
                     applianceSerialization.addApplianceBeforeChange(selectedAppliance);
                     applianceSerialization.addApplianceAfterChange(null);
                     applianceSerialization.addTimeOfChange(LocalDateTime.now());
-                    FileUtils.serializeAppliances(applianceSerialization);
+                    SerializeAppliancesThread serializeAppliancesThread = new SerializeAppliancesThread(applianceSerialization);
+                    serializeAppliancesThread.serializeAppliances(applianceSerialization);
                     DatabaseUtils.deleteAppliance(selectedAppliance);
                     List<Appliance> appliances = DatabaseUtils.getAllAppliances();
                     ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);

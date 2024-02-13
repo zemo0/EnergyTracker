@@ -1,6 +1,5 @@
-package com.Threads;
+package com.DatabaseThreads;
 import com.models.Appliance;
-import com.utils.DatabaseUtils;
 
 public class UpdateApplianceThread extends DatabaseThread implements Runnable{
     private final Appliance appliance;

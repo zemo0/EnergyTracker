@@ -1,4 +1,4 @@
-package com.Threads;
+package com.DatabaseThreads;
 
 public class GetAllCategoriesThread extends DatabaseThread implements Runnable{
     @Override

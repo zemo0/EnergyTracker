@@ -1,4 +1,4 @@
-package com.Threads;
+package com.DatabaseThreads;
 
 import com.models.Appliance;
 

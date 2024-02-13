@@ -1,4 +1,4 @@
-package com.Threads;
+package com.DatabaseThreads;
 
 public class GetApplianceByMonthThread extends DatabaseThread implements Runnable{
     private final String month;

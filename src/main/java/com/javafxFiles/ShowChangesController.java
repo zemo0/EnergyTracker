@@ -1,5 +1,9 @@
 package com.javafxFiles;
 
+import com.FileUtilsThreads.DeserializeAppliancesThread;
+import com.FileUtilsThreads.DeserializeCategoriesThread;
+import com.FileUtilsThreads.DeserializeRacuneThread;
+import com.FileUtilsThreads.FileUtilsThread;
 import com.Serialization.ApplianceSerialization;
 import com.Serialization.CategorySerialization;
 import com.models.Role;
@@ -19,13 +23,15 @@ public class ShowChangesController {
 
     public void initialize(){
         changesTextArea.setText("Stvoreni korisnici: \n");
-        for(Role r : FileUtils.deserializeRacune()) {
+        DeserializeRacuneThread deserializeRacuneThread = new DeserializeRacuneThread();
+        for(Role r : deserializeRacuneThread.deserializeRacune()) {
             changesTextArea.appendText("Rola: " + r.getRole() + ", korisničko ime: " + r.getUsername() + "\n");
         }
         changesTextArea.appendText("-----------------------------\n");
         changesTextArea.appendText("\n");
         changesTextArea.appendText("Promjene u kategorijama: \n");
-        CategorySerialization categorySerialization = FileUtils.deserializeCategories();
+        DeserializeCategoriesThread deserializeCategoriesThread = new DeserializeCategoriesThread();
+        CategorySerialization categorySerialization = deserializeCategoriesThread.deserializeCategories();
         for(int i = 0; i < categorySerialization.getChangeInCategories().size(); i++){
             changesTextArea.appendText("Promjena: " + categorySerialization.getChangeInCategories().get(i) + "\n");
             changesTextArea.appendText("Prije promjene: " + categorySerialization.getCategoriesBeforeChange().get(i) + "\n");
@@ -35,7 +41,8 @@ public class ShowChangesController {
         }
         changesTextArea.appendText("-----------------------------\n");
         changesTextArea.appendText("Promjene u uređajima: \n");
-        ApplianceSerialization applianceSerialization = FileUtils.deserializeAppliances();
+        DeserializeAppliancesThread deserializeAppliancesThread = new DeserializeAppliancesThread();
+        ApplianceSerialization applianceSerialization = deserializeAppliancesThread.deserializeAppliances();
         for(int i = 0; i < applianceSerialization.getChangeInAppliances().size(); i++){
             changesTextArea.appendText("Promjena: " + applianceSerialization.getChangeInAppliances().get(i) + "\n");
             changesTextArea.appendText("Prije promjene: " + applianceSerialization.getAppliancesBeforeChange().get(i) + "\n");

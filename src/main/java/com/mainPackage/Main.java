@@ -1,7 +1,7 @@
 package com.mainPackage;
 
-import com.Threads.GetAllAppliancesThread;
-import com.Threads.GetAllCategoriesThread;
+import com.DatabaseThreads.GetAllAppliancesThread;
+import com.DatabaseThreads.GetAllCategoriesThread;
 import com.models.Appliance;
 import com.models.Category;
 import com.utils.DatabaseUtils;

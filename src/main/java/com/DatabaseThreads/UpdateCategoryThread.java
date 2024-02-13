@@ -1,6 +1,5 @@
-package com.Threads;
+package com.DatabaseThreads;
 
-import com.models.Appliance;
 import com.models.Category;
 
 public class UpdateCategoryThread extends DatabaseThread implements Runnable{

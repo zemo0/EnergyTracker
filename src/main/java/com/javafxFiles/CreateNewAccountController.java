@@ -2,6 +2,8 @@ package com.javafxFiles;
 
 import com.Exceptions.DuplicateUserException;
 import com.Exceptions.FileNotCorrectException;
+import com.FileUtilsThreads.DohvatRacunaThread;
+import com.FileUtilsThreads.SerializeRacuneThread;
 import com.models.Admin;
 import com.models.User;
 import com.models.Role;
@@ -47,7 +49,8 @@ public class CreateNewAccountController {
         String role = roleSelectorComboBox.getValue();
         Set<Role> racuni = new HashSet<>();
         try {
-            racuni = FileUtils.dohvatPodatakaORacunima();
+            DohvatRacunaThread dohvatRacunaThread = new DohvatRacunaThread();
+            racuni = dohvatRacunaThread.dohvatPodatakaORacunima();
         } catch (FileNotCorrectException e) {
             e.printStackTrace();
             logger.info("Datoteka s korisnicima nije ispravna, nedostaje neki podatak");
@@ -132,8 +135,8 @@ public class CreateNewAccountController {
 
         HelloApplication.getStage().setScene(scene);
         HelloApplication.getStage().show();
-        FileUtils.serializeRacune(changesInRoles);
+        SerializeRacuneThread serializeRacuneThread = new SerializeRacuneThread(changesInRoles);
+        serializeRacuneThread.serializeRacune(changesInRoles);
         changeCounter = changesInRoles.size();
-        System.out.println(FileUtils.deserializeRacune());
     }
 }

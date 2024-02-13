@@ -1,7 +1,8 @@
 package com.javafxFiles;
 
+import com.FileUtilsThreads.SerializeCategoriesThread;
 import com.Serialization.CategorySerialization;
-import com.Threads.GetAllCategoriesThread;
+import com.DatabaseThreads.GetAllCategoriesThread;
 import com.models.Category;
 import com.utils.DatabaseUtils;
 import com.utils.FileUtils;
@@ -13,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.mainPackage.Main.logger;
@@ -67,7 +67,8 @@ public class EnterNewCategoryController {
         categorySerialization.addCategoryAfterChange(category);
         categorySerialization.addChangeInCategories("Unos nove kategorije");
         categorySerialization.addTimeOfChange(java.time.LocalDateTime.now());
-        FileUtils.serializeCategories(categorySerialization);
+        SerializeCategoriesThread serializeCategoriesThread = new SerializeCategoriesThread(categorySerialization);
+        serializeCategoriesThread.serializeCategories(categorySerialization);
     }
     public void searchCategory(){
         String searchCategory = searchCategoryTextField.getText();
@@ -99,7 +100,8 @@ public class EnterNewCategoryController {
                     categorySerialization.addCategoryAfterChange(category);
                     categorySerialization.addChangeInCategories("Izmjena kategorije");
                     categorySerialization.addTimeOfChange(java.time.LocalDateTime.now());
-                    FileUtils.serializeCategories(categorySerialization);
+                    SerializeCategoriesThread serializeCategoriesThread = new SerializeCategoriesThread(categorySerialization);
+                    serializeCategoriesThread.serializeCategories(categorySerialization);
                     DatabaseUtils.updateCategory(category, selectedCategory.getId()); // izmjena
                     GetAllCategoriesThread getAllCategoriesThread = new GetAllCategoriesThread();
                     List<Category> categories = getAllCategoriesThread.getAllCategories();
@@ -139,7 +141,8 @@ public class EnterNewCategoryController {
                 categorySerialization.addCategoryAfterChange(null);
                 categorySerialization.addChangeInCategories("Brisanje kategorije");
                 categorySerialization.addTimeOfChange(java.time.LocalDateTime.now());
-                FileUtils.serializeCategories(categorySerialization);
+                SerializeCategoriesThread serializeCategoriesThread = new SerializeCategoriesThread(categorySerialization);
+                serializeCategoriesThread.serializeCategories(categorySerialization);
                 DatabaseUtils.deleteCategory(selectedCategory);
                 clearFields();
             } else {

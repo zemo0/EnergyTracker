@@ -1,7 +1,6 @@
-package com.Threads;
+package com.DatabaseThreads;
 
 import com.models.Category;
-import com.utils.DatabaseUtils;
 
 public class DeleteCategoryThread extends DatabaseThread implements Runnable{
     private final Category category;

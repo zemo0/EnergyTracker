@@ -1,4 +1,4 @@
-package com.Threads;
+package com.DatabaseThreads;
 import com.models.Category;
 public class InsertNewCategoryThread extends DatabaseThread implements Runnable{
     private final Category category;

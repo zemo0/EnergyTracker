@@ -2,6 +2,7 @@ package com.javafxFiles;
 
 import com.Exceptions.FileNotCorrectException;
 import com.Exceptions.InvalidCredentialsException;
+import com.FileUtilsThreads.DohvatRacunaThread;
 import com.models.Role;
 import com.utils.FileUtils;
 import javafx.fxml.FXML;
@@ -26,7 +27,8 @@ public class LoginController {
     public void loginButton(){
         Set<Role> racuni = new HashSet<>();
         try {
-            racuni = FileUtils.dohvatPodatakaORacunima();
+            DohvatRacunaThread dohvatRacunaThread = new DohvatRacunaThread();
+            racuni = dohvatRacunaThread.dohvatPodatakaORacunima();
         } catch (FileNotCorrectException e) {
             e.printStackTrace();
             logger.info("Datoteka s korisnicima nije ispravna, nedostaje neki podatak");
