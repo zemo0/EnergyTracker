@@ -5,7 +5,6 @@ import com.Serialization.CategorySerialization;
 import com.DatabaseThreads.GetAllCategoriesThread;
 import com.models.Category;
 import com.utils.DatabaseUtils;
-import com.utils.FileUtils;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,7 +17,7 @@ import java.util.List;
 
 import static com.mainPackage.Main.logger;
 
-public class EnterNewCategoryController {
+public final class CategoryController implements CRUD_Methods{
     @FXML
     private TextField categoryNameTextField;
     @FXML
@@ -52,8 +51,8 @@ public class EnterNewCategoryController {
         ObservableList<Category> observableCategories = FXCollections.observableArrayList(categories);
         categoryTableView.setItems(observableCategories);
     }
-
-    public void addCategory(){
+    @Override
+    public void add(){
         String categoryName = categoryNameTextField.getText();
         String categoryDescription = categoryDescriptionTextField.getText();
         Category category = new Category.CategoryBuilder().name(categoryName).description(categoryDescription).build();
@@ -70,7 +69,8 @@ public class EnterNewCategoryController {
         SerializeCategoriesThread serializeCategoriesThread = new SerializeCategoriesThread(categorySerialization);
         serializeCategoriesThread.serializeCategories(categorySerialization);
     }
-    public void searchCategory(){
+    @Override
+    public void search(){
         String searchCategory = searchCategoryTextField.getText();
         GetAllCategoriesThread getAllCategoriesThread = new GetAllCategoriesThread();
         List<Category> categories = getAllCategoriesThread.getAllCategories();
@@ -83,7 +83,8 @@ public class EnterNewCategoryController {
         ObservableList<Category> observableCategories = FXCollections.observableArrayList(sortedCategories);
         categoryTableView.setItems(observableCategories);
     }
-    public void changeCategory(){
+    @Override
+    public void change(){
         Category selectedCategory = categoryTableView.getSelectionModel().getSelectedItem();//treba implementirat update tablice nakon izmjene jedne kategorije
         if(selectedCategory != null && !categoryNameTextField.getText().isEmpty() && !categoryDescriptionTextField.getText().isEmpty()){
             Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);//samo potvrda promjene podataka
@@ -128,8 +129,8 @@ public class EnterNewCategoryController {
         }
         clearFields();
     }
-
-    public void deleteCategory(){
+    @Override
+    public void delete(){
         Category selectedCategory = categoryTableView.getSelectionModel().getSelectedItem();//treba implementirat update tablice nakon izmjene jedne kategorije
         Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);//samo potvrda promjene podataka
         confirmationDialog.setTitle("Potvrda");

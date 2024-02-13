@@ -2,7 +2,7 @@ package com.models;
 
 import java.io.Serializable;
 
-public abstract class Role implements Serializable, Authentify {
+public abstract class Role implements Serializable, RoleMethods {
     private String username;
     private String password;
     private String role;

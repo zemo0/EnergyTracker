@@ -1,6 +1,6 @@
 package com.models;
 
-public interface Authentify {
+public interface RoleMethods {
     String getUsername();
     String getPassword();
     void setUsername(String username);

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafxFiles.EnterNewCategoryController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafxFiles.CategoryController">
     <fx:include source="menuBar.fxml" />
    <GridPane layoutY="30.0" prefHeight="571.0" prefWidth="850.0">
      <columnConstraints>
@@ -65,7 +65,7 @@
             <GridPane.margin>
                <Insets right="75.0" />
             </GridPane.margin></TextField>
-         <Button mnemonicParsing="false" onAction="#addCategory" prefWidth="75.0" text="Dodaj" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+         <Button mnemonicParsing="false" onAction="#add" prefWidth="75.0" text="Dodaj" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
             <font>
                <Font size="14.0" />
             </font>
@@ -76,17 +76,17 @@
              <TableColumn fx:id="categoryDescriptionTableColumn" prefWidth="425.0" text="Opis kategorije" />
            </columns>
          </TableView>
-         <Button fx:id="changeCategoryButton" mnemonicParsing="false" onAction="#changeCategory" prefWidth="75.0" text="Izmjeni" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+         <Button fx:id="changeCategoryButton" mnemonicParsing="false" onAction="#change" prefWidth="75.0" text="Izmjeni" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
             <font>
                <Font size="14.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#deleteCategory" prefWidth="75.0" text="Izbriši" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+         <Button mnemonicParsing="false" onAction="#delete" prefWidth="75.0" text="Izbriši" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
             <font>
                <Font size="14.0" />
             </font>
          </Button>
-         <TextField fx:id="searchCategoryTextField" maxWidth="300.0" onKeyTyped="#searchCategory" prefWidth="300.0" promptText="Pretraživanje kategorija..." GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+         <TextField fx:id="searchCategoryTextField" maxWidth="300.0" onKeyTyped="#search" prefWidth="300.0" promptText="Pretraživanje kategorija..." GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
       </children>
    </GridPane>
 </AnchorPane>

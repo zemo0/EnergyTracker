@@ -7,7 +7,6 @@ import com.mainPackage.Main;
 import com.models.ElectricityCost;
 import com.models.Months;
 import com.utils.DatabaseUtils;
-import com.utils.FileUtils;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -24,7 +23,7 @@ import java.util.List;
 
 import static com.mainPackage.Main.logger;
 
-public class EnterNewApplianceController {
+public final class ApplianceController implements CRUD_Methods{
     @FXML
     private ComboBox<Category> categoryComboBox;
     @FXML
@@ -100,7 +99,8 @@ public class EnterNewApplianceController {
         ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);
         applianceTableView.setItems(observableAppliances);
     }
-    public void addAppliance(){
+    @Override
+    public void add(){
         Category category = categoryComboBox.getValue();
         Months month = monthsComboBox.getValue();
         double appliancePowerUse = Double.parseDouble(appliancePowerUseTextField.getText());
@@ -125,9 +125,12 @@ public class EnterNewApplianceController {
             DatabaseUtils.insertNewAppliance(appliance);
             clearFields();
         }
-
+        List<Appliance> appliances = DatabaseUtils.getAllAppliances();
+        ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(appliances);
+        applianceTableView.setItems(observableAppliances);
     }
-    public void searchAppliance(){
+    @Override
+    public void search(){
         String searchApplianceText = searchApplianceTextField.getText();
         List<Appliance> appliances = DatabaseUtils.getAllAppliances();
         List<Appliance> sortedAppliances = appliances.stream()
@@ -135,7 +138,8 @@ public class EnterNewApplianceController {
         ObservableList<Appliance> observableAppliances = FXCollections.observableArrayList(sortedAppliances);
         applianceTableView.setItems(observableAppliances);
     }
-    public void changeAppliance(){
+    @Override
+    public void change(){
         Appliance selectedAppliance = applianceTableView.getSelectionModel().getSelectedItem();
         if(selectedAppliance != null && categoryComboBox.getValue() != null && monthsComboBox.getValue() != null
                 && !appliancePowerUseTextField.getText().isEmpty() && !dailyUseTimeTextField.getText().isEmpty()
@@ -188,7 +192,8 @@ public class EnterNewApplianceController {
             logger.info("Nisu uneseni podatci za promjenu trošila");
         }
     }
-    public void deleteAppliance(){
+    @Override
+    public void delete(){
         Appliance selectedAppliance = applianceTableView.getSelectionModel().getSelectedItem();
         if(selectedAppliance != null){
             Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);//samo potvrda promjene podataka
