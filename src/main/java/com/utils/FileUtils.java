@@ -18,7 +18,7 @@ import static com.mainPackage.Main.logger;
 
 public class FileUtils {
     public static final String serializeRolesFileName = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\racuni.dat";
-    public static final String serializeCategoriesFileName = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\racuni.dat";
+    public static final String serializeCategoriesFileName = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\kategorije.dat";
     public static final String serializeAppliancesFileName = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\uredaji.dat";
     public static Set<Role> dohvatPodatakaORacunima() throws FileNotCorrectException {
         String filePath = "C:\\Users\\Zemo\\IdeaProjects\\EnergyTracker\\files\\loginInfo.txt";

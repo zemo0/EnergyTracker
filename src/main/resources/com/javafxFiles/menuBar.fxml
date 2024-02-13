@@ -10,15 +10,17 @@
    <children>
       <MenuBar prefHeight="26.0" prefWidth="850.0" stylesheets="@style.css" AnchorPane.topAnchor="0.0">
         <menus>
-          <Menu mnemonicParsing="false" text="Home" />
+          <Menu mnemonicParsing="false" text="Home">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showEnterNewCategoryScreen" text="Početni ekran" />
+               </items></Menu>
           <Menu mnemonicParsing="false" text="Kategorije">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#showEnterNewCategoryScreen" text="Unos uređaja" />
                </items></Menu>
             <Menu mnemonicParsing="false" text="Uređaji">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#showEnterNewApplianceScreen" text="Unos uređaja" />
-                  <MenuItem mnemonicParsing="false" text="Brisanje uređaja" />
+                  <MenuItem mnemonicParsing="false" onAction="#showEnterNewApplianceScreen" text="Pregled uređaja" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Račun">
