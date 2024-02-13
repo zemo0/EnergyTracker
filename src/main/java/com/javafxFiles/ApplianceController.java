@@ -21,6 +21,7 @@ import javafx.util.Callback;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.javafxFiles.LoginController.currentUser;
 import static com.mainPackage.Main.logger;
 
 public final class ApplianceController implements CRUD_Methods{
@@ -108,8 +109,8 @@ public final class ApplianceController implements CRUD_Methods{
         Double dailyConsumption = (appliancePowerUse/1000) * dailyUseTime;
         String tariff = tariffComboBox.getValue();
         Double totalCostOfAppliance = tariff.equals("Dnevna") ? dailyConsumption * ElectricityCost.DAILY_RATE : dailyConsumption * ElectricityCost.NIGHT_RATE;
-        Appliance appliance = new Appliance.ApplianceBuilder().category(category).month(month)
-                .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
+        Appliance appliance = new Appliance.ApplianceBuilder().category(category).username(currentUser.getUsername())
+                .month(month).appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
                 .dailyConsumption(dailyConsumption).totalCostOfAppliance(totalCostOfAppliance)
                 .build();
         applianceSerialization.addChangeInAppliances("Unos novog trošila");
@@ -157,9 +158,10 @@ public final class ApplianceController implements CRUD_Methods{
                     double dailyConsumption = (appliancePowerUse/1000) * dailyUseTime;
                     String tariff = tariffComboBox.getValue();
                     double totalCostOfAppliance = tariff.equals("Dnevna") ? dailyConsumption * ElectricityCost.DAILY_RATE : dailyConsumption * ElectricityCost.NIGHT_RATE;
-                    Appliance appliance = new Appliance.ApplianceBuilder().category(category).month(month)
-                            .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime).tariff("Dnevna".equals(tariff))
-                            .dailyConsumption(dailyConsumption).totalCostOfAppliance(totalCostOfAppliance)
+                    Appliance appliance = new Appliance.ApplianceBuilder().category(category).username(currentUser.getUsername())
+                            .month(month).appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime)
+                            .tariff("Dnevna".equals(tariff)).dailyConsumption(dailyConsumption)
+                            .totalCostOfAppliance(totalCostOfAppliance)
                             .build();
                     applianceSerialization.addChangeInAppliances("Promjena trošila");
                     applianceSerialization.addApplianceBeforeChange(selectedAppliance);

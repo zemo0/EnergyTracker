@@ -12,7 +12,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Home">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#showEnterNewCategoryScreen" text="Početni ekran" />
+                  <MenuItem mnemonicParsing="false" onAction="#showHomeScreen" text="Početni ekran" />
                </items></Menu>
           <Menu mnemonicParsing="false" text="Kategorije">
                <items>

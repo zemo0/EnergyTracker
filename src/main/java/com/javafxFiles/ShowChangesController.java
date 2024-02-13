@@ -16,6 +16,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.javafxFiles.LoginController.currentUser;
+
 public class ShowChangesController {
     @FXML
     private TextArea changesTextArea;
@@ -48,8 +50,8 @@ public class ShowChangesController {
             changesTextArea.appendText("Prije promjene: " + applianceSerialization.getAppliancesBeforeChange().get(i) + "\n");
             changesTextArea.appendText("Nakon promjene: " + applianceSerialization.getAppliancesAfterChange().get(i) + "\n");
             changesTextArea.appendText("Vrijeme promjene: " + applianceSerialization.getTimeOfChange().get(i).format(DateTimeFormatter.ofPattern(dateTimeFormatter)) + "\n");
+            changesTextArea.appendText("Promjenio korisnik: " + currentUser.getUsername() + "\n");
             changesTextArea.appendText("\n");
         }
-        changesTextArea.appendText("Promjene napravio: " + LoginController.currentUser);
     }
 }

@@ -13,6 +13,7 @@ import com.models.Appliance;
 import com.models.Category;
 import com.models.Months;
 
+import static com.javafxFiles.LoginController.currentUser;
 import static com.mainPackage.Main.logger;
 
 public class DatabaseUtils {
@@ -54,20 +55,21 @@ public class DatabaseUtils {
     public static List<Appliance> getAllAppliances(){
         List<Appliance> appliances = new ArrayList<>();
         try(Connection connection = connectToDatabase()) {
-            String sqlQuery = "SELECT * FROM APPLIANCE";
+            String sqlQuery = "SELECT * FROM APPLIANCE WHERE USERNAME = '" + currentUser.getUsername() + "'";
             Statement stmt = connection.createStatement();
             stmt.execute(sqlQuery);
             ResultSet rs = stmt.getResultSet();
             while(rs.next()){
                 Long id = rs.getLong("ID");
                 long categoryId = rs.getLong("CATEGORY_ID");
+                String username = rs.getString("USERNAME");
                 Months month = Months.valueOf(rs.getString("MONTH_OF_USE"));
                 Double appliancePowerUse = rs.getDouble("APPLIANCE_POWER_USE");
                 Double dailyUseTime = rs.getDouble("DAILY_USE_TIME");
                 Boolean tariff = rs.getBoolean("TARIFF");
                 Double dailyConsumption = rs.getDouble("DAILY_CONSUMPTION");
                 Double totalCostOfAppliance = rs.getDouble("TOTAL_COST_OF_APPLIANCE");
-                Appliance appliance = new Appliance.ApplianceBuilder().id(id).categoryId(categoryId).month(month)
+                Appliance appliance = new Appliance.ApplianceBuilder().id(id).categoryId(categoryId).username(username).month(month)
                         .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime)
                         .tariff(tariff).dailyConsumption(dailyConsumption).totalCostOfAppliance(totalCostOfAppliance)
                         .build();
@@ -93,15 +95,16 @@ public class DatabaseUtils {
     }
     public static void insertNewAppliance(Appliance appliance){
         try(Connection connection = connectToDatabase()){
-            String sqlQuery = "INSERT INTO APPLIANCE (CATEGORY_ID, MONTH_OF_USE, APPLIANCE_POWER_USE, DAILY_USE_TIME, TARIFF, DAILY_CONSUMPTION, TOTAL_COST_OF_APPLIANCE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sqlQuery = "INSERT INTO APPLIANCE (CATEGORY_ID, USERNAME, MONTH_OF_USE, APPLIANCE_POWER_USE, DAILY_USE_TIME, TARIFF, DAILY_CONSUMPTION, TOTAL_COST_OF_APPLIANCE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
             pstmt.setLong(1, Main.getCategoryId(appliance.getApplianceCategory()));
-            pstmt.setString(2, appliance.getMonth());
-            pstmt.setDouble(3, appliance.getAppliancePowerUse());
-            pstmt.setDouble(4, appliance.getDailyUseTime());
-            pstmt.setBoolean(5, appliance.getTariff());
-            pstmt.setDouble(6, appliance.getDailyConsumption());
-            pstmt.setDouble(7, appliance.getTotalCostOfAppliance());
+            pstmt.setString(2, appliance.getUsername());
+            pstmt.setString(3, appliance.getMonth());
+            pstmt.setDouble(4, appliance.getAppliancePowerUse());
+            pstmt.setDouble(5, appliance.getDailyUseTime());
+            pstmt.setBoolean(6, appliance.getTariff());
+            pstmt.setDouble(7, appliance.getDailyConsumption());
+            pstmt.setDouble(8, appliance.getTotalCostOfAppliance());
             pstmt.executeUpdate();
         } catch (SQLException | IOException | DatabaseConnectionException ex){
             logger.error("Greška pri unosu novog uređaja u bazu podataka");
@@ -123,18 +126,19 @@ public class DatabaseUtils {
     }
     public static void updateAppliance(Appliance appliance, Long id){
         try (Connection connection = connectToDatabase()) {
-            String sqlQuery = "UPDATE APPLIANCE SET CATEGORY_ID = ?, MONTH_OF_USE = ?, " +
+            String sqlQuery = "UPDATE APPLIANCE SET CATEGORY_ID = ?, USERNAME = ?, MONTH_OF_USE = ?, " +
                     "APPLIANCE_POWER_USE = ?, DAILY_USE_TIME = ?, TARIFF = ?, DAILY_CONSUMPTION = ?, TOTAL_COST_OF_APPLIANCE = ?" +
                     " WHERE ID = ?";
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery);
             pstmt.setLong(1, appliance.getApplianceCategory().getId());
-            pstmt.setString(2, appliance.getMonth());
-            pstmt.setDouble(3, appliance.getAppliancePowerUse());
-            pstmt.setDouble(4, appliance.getDailyUseTime());
-            pstmt.setBoolean(5, appliance.getTariff());
-            pstmt.setDouble(6, appliance.getDailyConsumption());
-            pstmt.setDouble(7, appliance.getTotalCostOfAppliance());
-            pstmt.setLong(8, id);
+            pstmt.setString(2, appliance.getUsername());
+            pstmt.setString(3, appliance.getMonth());
+            pstmt.setDouble(4, appliance.getAppliancePowerUse());
+            pstmt.setDouble(5, appliance.getDailyUseTime());
+            pstmt.setBoolean(6, appliance.getTariff());
+            pstmt.setDouble(7, appliance.getDailyConsumption());
+            pstmt.setDouble(8, appliance.getTotalCostOfAppliance());
+            pstmt.setLong(9, id);
             pstmt.executeUpdate();
         } catch (SQLException | IOException | DatabaseConnectionException ex) {
             logger.error("Greška pri ažuriranju kategorije u bazi podataka");
@@ -166,20 +170,21 @@ public class DatabaseUtils {
     public static List<Appliance> getAppliancesByMonth(String month){
         List<Appliance> appliances = new ArrayList<>();
         try (Connection connection = connectToDatabase()) {
-            String sqlQuery = "SELECT * FROM APPLIANCE WHERE MONTH_OF_USE = '" + month + "'";
+            String sqlQuery = "SELECT * FROM APPLIANCE WHERE MONTH_OF_USE = '" + month + "' AND USERNAME = '" + currentUser.getUsername() + "'";
             Statement stmt = connection.createStatement();
             stmt.execute(sqlQuery);
             ResultSet rs = stmt.getResultSet();
             while(rs.next()){
                 Long id = rs.getLong("ID");
                 long categoryId = rs.getLong("CATEGORY_ID");
+                String username = rs.getString("USERNAME");
                 Double appliancePowerUse = rs.getDouble("APPLIANCE_POWER_USE");
                 Double dailyUseTime = rs.getDouble("DAILY_USE_TIME");
                 Boolean tariff = rs.getBoolean("TARIFF");
                 Double dailyConsumption = rs.getDouble("DAILY_CONSUMPTION");
                 Double totalCostOfAppliance = rs.getDouble("TOTAL_COST_OF_APPLIANCE");
-                Appliance appliance = new Appliance.ApplianceBuilder().id(id).categoryId(categoryId).month(Months.valueOf(month))
-                        .appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime)
+                Appliance appliance = new Appliance.ApplianceBuilder().id(id).categoryId(categoryId).username(username)
+                        .month(Months.valueOf(month)).appliancePowerUse(appliancePowerUse).dailyUseTime(dailyUseTime)
                         .tariff(tariff).dailyConsumption(dailyConsumption).totalCostOfAppliance(totalCostOfAppliance)
                         .build();
                 appliances.add(appliance);

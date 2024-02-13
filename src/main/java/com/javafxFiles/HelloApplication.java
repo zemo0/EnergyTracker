@@ -19,23 +19,10 @@ import static com.mainPackage.Main.logger;
  * Pokazati potrošnju npr u količini CO2 emisije
  * Na sve staviti lijepi CSS
  *
- * DASHBOARD:
- * Home(Pokazuje se sažeta statistika i par savjeta za potrošnju)
- * Entry(Unos podataka, obavijest kad je probijen rekord potrošnje)
- * Analiza potrošnje po uređaju(korisnik odabere uređaj i ispiše mu koliko troši u usporedbi s nečim drugim?)
- *
- * KLASE:
- * Mjesec potrošnje(ENUMERACIJA)
- * Kategorija trošila(dodaj novu, izmjeni, izbrisi)
- * Potrošnja proizvoda(ostala dve klase ukomponirane u ovu -> dodaj, izmjeni, izbrisi)
- * Račun(ukupni trošak i ispis svih troškova za taj mjesec, samo lijepi prikaz), prikazat ga na home pageu
- *
- * svaka klasa mora bit svoj meni
- * nemoj komplicirat zasad, napravi sve kako zahtijeva i onda dodavaj nove stvari
- * Saznati što napraviti kao generičnu klasu
- * serijalizirati promjene i ispisati ih u novi screen
  * BUG kad brises kategoriju koja postoji u appliiance
- * BUG kod promjene treba ispisati i opis kategorije a ne samo ime
+ * iskoristiti mapu negdje, genericnu listu s jednim parametrom
+ * dodati da se rola koja mjenja podatke kod serijalizacije također ispiše
+ * logout opciju napravit koja te samo vrati na login screen
  *
  */
 

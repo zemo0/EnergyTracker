@@ -8,6 +8,7 @@ import java.util.List;
 public class Appliance implements Serializable {
     private Long id;
     private Category applianceCategory;
+    private String username;
     private String month;
     private Double appliancePowerUse;
     private Double dailyUseTime;
@@ -17,6 +18,7 @@ public class Appliance implements Serializable {
     public Appliance(ApplianceBuilder builder){
         this.id = builder.id;
         this.applianceCategory = builder.applianceCategory;
+        this.username = builder.username;
         this.month = builder.month;
         this.appliancePowerUse = builder.appliancePowerUse;
         this.dailyUseTime = builder.dailyUseTime;
@@ -27,6 +29,7 @@ public class Appliance implements Serializable {
     public static class ApplianceBuilder{
         private Long id;
         private Category applianceCategory;
+        private String username;
         private String month;
         private Double appliancePowerUse;
         private Double dailyUseTime;
@@ -49,6 +52,10 @@ public class Appliance implements Serializable {
         }
         public ApplianceBuilder category(Category category){
             this.applianceCategory = category;
+            return this;
+        }
+        public ApplianceBuilder username(String username){
+            this.username = username;
             return this;
         }
         public ApplianceBuilder month(Months month){
@@ -140,6 +147,14 @@ public class Appliance implements Serializable {
 
     public void setTotalCostOfAppliance(Double totalCostOfAppliance) {
         this.totalCostOfAppliance = totalCostOfAppliance;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

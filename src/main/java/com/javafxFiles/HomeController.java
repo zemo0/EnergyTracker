@@ -1,0 +1,51 @@
+package com.javafxFiles;
+
+import com.DatabaseThreads.AverageCostByMonthThread;
+import com.models.Appliance;
+import com.models.Months;
+import com.utils.DatabaseUtils;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
+
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class HomeController implements Initializable {
+    @FXML
+    private BarChart<String, Double> barChart;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        XYChart.Series<String, Double> series1 = new XYChart.Series<>();
+        for(Months month : Months.values()) {
+            List<Appliance> appliances = DatabaseUtils.getAppliancesByMonth(String.valueOf(month));
+            Double suma = appliances.stream().mapToDouble(Appliance::getTotalCostOfAppliance).sum();
+            series1.getData().add(new XYChart.Data<String, Double>(month.toString(), suma));
+        }
+        barChart.getData().add(series1);
+
+        Timeline refreshThread = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                AverageCostByMonthThread thread = new AverageCostByMonthThread();
+                Platform.runLater(thread); //javafx ima svoje threadove i ovo se koristi umjesto ovih dolje da ih ne zezne
+                //Thread starter = new Thread(thread);
+                //starter.start();
+            }
+        }), new KeyFrame(Duration.seconds(1)));
+        refreshThread.setCycleCount(Animation.INDEFINITE);
+        refreshThread.play();
+    }
+}
