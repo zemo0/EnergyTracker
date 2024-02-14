@@ -32,6 +32,12 @@
                   <MenuItem mnemonicParsing="false" onAction="#showChangesScreen" text="Pregled promjena" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Korisnik">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showUsersScreen" text="Pregled korisnika" />
+                  <MenuItem mnemonicParsing="false" onAction="#showLoginScreen" text="Izlogirajte se" />
+               </items>
+            </Menu>
         </menus>
          <styleClass>
             <String fx:value="MenuBar" />

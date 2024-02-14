@@ -63,4 +63,13 @@ public class Main {
         }
         return false;
     }
+    public static boolean isCategoryUsedInAppliances(Category category){
+        List<Appliance> appliances = DatabaseUtils.getAllAppliances();
+        for(Appliance a : appliances){
+            if(a.getApplianceCategory().getName().equals(category.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -11,11 +11,13 @@ public class CategorySerialization implements Serializable {
     private List<String> changeInCategories;
     private List<Category> categoriesBeforeChange;
     private List<Category> categoriesAfterChange;
+    private List<String> roleThatChanged;
     private List<LocalDateTime> timeOfChange;
     public CategorySerialization(){
         changeInCategories = new ArrayList<>();
         categoriesBeforeChange = new ArrayList<>();
         categoriesAfterChange = new ArrayList<>();
+        roleThatChanged = new ArrayList<>();
         timeOfChange = new ArrayList<>();
     }
     public void addChangeInCategories(String change){
@@ -30,6 +32,18 @@ public class CategorySerialization implements Serializable {
     public void addTimeOfChange(LocalDateTime time){
         timeOfChange.add(time);
     }
+    public void addRoleThatChanged(String role){
+        roleThatChanged.add(role);
+    }
+
+    public List<String> getRoleThatChanged() {
+        return roleThatChanged;
+    }
+
+    public void setRoleThatChanged(List<String> roleThatChanged) {
+        this.roleThatChanged = roleThatChanged;
+    }
+
     public List<String> getChangeInCategories() {
         return changeInCategories;
     }

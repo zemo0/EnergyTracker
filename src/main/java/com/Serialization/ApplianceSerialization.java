@@ -9,11 +9,13 @@ public class ApplianceSerialization implements Serializable {
     private List<String> changeInAppliances;
     private List<Appliance> appliancesBeforeChange;
     private List<Appliance> appliancesAfterChange;
+    private List<String> roleThatChanged;
     private List<LocalDateTime> timeOfChange;
     public ApplianceSerialization(){
         changeInAppliances = new ArrayList<>();
         appliancesBeforeChange = new ArrayList<>();
         appliancesAfterChange = new ArrayList<>();
+        roleThatChanged = new ArrayList<>();
         timeOfChange = new ArrayList<>();
     }
     public void addChangeInAppliances(String change){
@@ -27,6 +29,17 @@ public class ApplianceSerialization implements Serializable {
     }
     public void addTimeOfChange(LocalDateTime time){
         timeOfChange.add(time);
+    }
+    public void addRoleThatChanged(String role){
+        roleThatChanged.add(role);
+    }
+
+    public List<String> getRoleThatChanged() {
+        return roleThatChanged;
+    }
+
+    public void setRoleThatChanged(List<String> roleThatChanged) {
+        this.roleThatChanged = roleThatChanged;
     }
 
     public List<String> getChangeInAppliances() {

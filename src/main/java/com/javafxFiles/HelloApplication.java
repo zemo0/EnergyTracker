@@ -19,10 +19,9 @@ import static com.mainPackage.Main.logger;
  * Pokazati potrošnju npr u količini CO2 emisije
  * Na sve staviti lijepi CSS
  *
- * BUG kad brises kategoriju koja postoji u appliiance
  * iskoristiti mapu negdje, genericnu listu s jednim parametrom
- * dodati da se rola koja mjenja podatke kod serijalizacije također ispiše
- * logout opciju napravit koja te samo vrati na login screen
+ * dodati tablicu u kojoj pisu svi useri za admina
+ * preporuke za uštedu na home screenu ispisati ispod grafa
  *
  */
 

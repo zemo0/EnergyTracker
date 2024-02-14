@@ -116,6 +116,7 @@ public final class ApplianceController implements CRUD_Methods{
         applianceSerialization.addChangeInAppliances("Unos novog trošila");
         applianceSerialization.addApplianceBeforeChange(null);
         applianceSerialization.addApplianceAfterChange(appliance);
+        applianceSerialization.addRoleThatChanged(currentUser.getUsername());
         applianceSerialization.addTimeOfChange(LocalDateTime.now());
         SerializeAppliancesThread serializeAppliancesThread = new SerializeAppliancesThread(applianceSerialization);
         serializeAppliancesThread.serializeAppliances(applianceSerialization);
@@ -166,6 +167,7 @@ public final class ApplianceController implements CRUD_Methods{
                     applianceSerialization.addChangeInAppliances("Promjena trošila");
                     applianceSerialization.addApplianceBeforeChange(selectedAppliance);
                     applianceSerialization.addApplianceAfterChange(appliance);
+                    applianceSerialization.addRoleThatChanged(currentUser.getUsername());
                     applianceSerialization.addTimeOfChange(LocalDateTime.now());
                     SerializeAppliancesThread serializeAppliancesThread = new SerializeAppliancesThread(applianceSerialization);
                     serializeAppliancesThread.serializeAppliances(applianceSerialization);
@@ -207,6 +209,7 @@ public final class ApplianceController implements CRUD_Methods{
                     applianceSerialization.addChangeInAppliances("Brisanje trošila");
                     applianceSerialization.addApplianceBeforeChange(selectedAppliance);
                     applianceSerialization.addApplianceAfterChange(null);
+                    applianceSerialization.addRoleThatChanged(currentUser.getUsername());
                     applianceSerialization.addTimeOfChange(LocalDateTime.now());
                     SerializeAppliancesThread serializeAppliancesThread = new SerializeAppliancesThread(applianceSerialization);
                     serializeAppliancesThread.serializeAppliances(applianceSerialization);

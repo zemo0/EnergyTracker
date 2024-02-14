@@ -11,7 +11,7 @@ public class MenuBarController {
     public void showEnterNewCategoryScreen() {
         FXMLLoader fxmlLoader =
                 new FXMLLoader(HelloApplication.class.getResource(
-                        "enterNewCategoryScreen.fxml"));
+                        "categoryScreen.fxml"));
         Scene scene = null;
         try {
             scene = new Scene(fxmlLoader.load(), 850, 600);
@@ -25,7 +25,7 @@ public class MenuBarController {
     public void showEnterNewApplianceScreen() {
         FXMLLoader fxmlLoader =
                 new FXMLLoader(HelloApplication.class.getResource(
-                        "enterNewApplianceScreen.fxml"));
+                        "applianceScreen.fxml"));
         Scene scene = null;
         try {
             scene = new Scene(fxmlLoader.load(), 850, 600);
@@ -68,6 +68,34 @@ public class MenuBarController {
         FXMLLoader fxmlLoader =
                 new FXMLLoader(HelloApplication.class.getResource(
                         "homeScreen.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 850, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HelloApplication.getStage().setScene(scene);
+        HelloApplication.getStage().show();
+    }
+    public void showLoginScreen() {
+        FXMLLoader fxmlLoader =
+                new FXMLLoader(HelloApplication.class.getResource(
+                        "loginScreen.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 850, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HelloApplication.getStage().setScene(scene);
+        HelloApplication.getStage().show();
+    }
+    public void showUsersScreen() {
+        FXMLLoader fxmlLoader =
+                new FXMLLoader(HelloApplication.class.getResource(
+                        "usersScreen.fxml"));
         Scene scene = null;
         try {
             scene = new Scene(fxmlLoader.load(), 850, 600);

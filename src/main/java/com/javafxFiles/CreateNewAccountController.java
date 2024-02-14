@@ -27,7 +27,7 @@ import static com.mainPackage.Main.logger;
 
 public class CreateNewAccountController {
     public static Integer changeCounter = 0;
-    private Set<Role> changesInRoles = new HashSet<>();
+    public static Set<Role> changesInRoles = new HashSet<>();
     @FXML
     private ComboBox<String> roleSelectorComboBox;
     @FXML

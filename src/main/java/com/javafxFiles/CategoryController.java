@@ -3,6 +3,7 @@ package com.javafxFiles;
 import com.FileUtilsThreads.SerializeCategoriesThread;
 import com.Serialization.CategorySerialization;
 import com.DatabaseThreads.GetAllCategoriesThread;
+import com.mainPackage.Main;
 import com.models.Category;
 import com.utils.DatabaseUtils;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -15,6 +16,7 @@ import javafx.util.Callback;
 
 import java.util.List;
 
+import static com.javafxFiles.LoginController.currentUser;
 import static com.mainPackage.Main.logger;
 
 public final class CategoryController implements CRUD_Methods{
@@ -65,6 +67,7 @@ public final class CategoryController implements CRUD_Methods{
         categorySerialization.addCategoryBeforeChange(null);
         categorySerialization.addCategoryAfterChange(category);
         categorySerialization.addChangeInCategories("Unos nove kategorije");
+        categorySerialization.addRoleThatChanged(currentUser.getUsername());
         categorySerialization.addTimeOfChange(java.time.LocalDateTime.now());
         SerializeCategoriesThread serializeCategoriesThread = new SerializeCategoriesThread(categorySerialization);
         serializeCategoriesThread.serializeCategories(categorySerialization);
@@ -100,6 +103,7 @@ public final class CategoryController implements CRUD_Methods{
                     categorySerialization.addCategoryBeforeChange(selectedCategory);
                     categorySerialization.addCategoryAfterChange(category);
                     categorySerialization.addChangeInCategories("Izmjena kategorije");
+                    categorySerialization.addRoleThatChanged(currentUser.getUsername());
                     categorySerialization.addTimeOfChange(java.time.LocalDateTime.now());
                     SerializeCategoriesThread serializeCategoriesThread = new SerializeCategoriesThread(categorySerialization);
                     serializeCategoriesThread.serializeCategories(categorySerialization);
@@ -138,14 +142,24 @@ public final class CategoryController implements CRUD_Methods{
         confirmationDialog.setContentText("Stisnite OK za potvrdu");
         confirmationDialog.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                categorySerialization.addCategoryBeforeChange(selectedCategory);//serijalizacija
-                categorySerialization.addCategoryAfterChange(null);
-                categorySerialization.addChangeInCategories("Brisanje kategorije");
-                categorySerialization.addTimeOfChange(java.time.LocalDateTime.now());
-                SerializeCategoriesThread serializeCategoriesThread = new SerializeCategoriesThread(categorySerialization);
-                serializeCategoriesThread.serializeCategories(categorySerialization);
-                DatabaseUtils.deleteCategory(selectedCategory);
-                clearFields();
+                if(Main.isCategoryUsedInAppliances(selectedCategory)){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("GREŠKA KOD BRISANJA");
+                    alert.setHeaderText("Kategorija se koristi u nekom od aparata");
+                    alert.setContentText("Molimo vas da prvo promijenite kategoriju u svim aparatima");
+                    alert.showAndWait();
+                    logger.info("Kategorija se koristi u nekom od aparata");
+                }else {
+                    categorySerialization.addCategoryBeforeChange(selectedCategory);//serijalizacija
+                    categorySerialization.addCategoryAfterChange(null);
+                    categorySerialization.addChangeInCategories("Brisanje kategorije");
+                    categorySerialization.addRoleThatChanged(currentUser.getUsername());
+                    categorySerialization.addTimeOfChange(java.time.LocalDateTime.now());
+                    SerializeCategoriesThread serializeCategoriesThread = new SerializeCategoriesThread(categorySerialization);
+                    serializeCategoriesThread.serializeCategories(categorySerialization);
+                    DatabaseUtils.deleteCategory(selectedCategory);
+                    clearFields();
+                }
             } else {
                 logger.info("Promjena podataka kategorije nije potvrđena");
             }

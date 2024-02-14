@@ -38,6 +38,7 @@ public class ShowChangesController {
             changesTextArea.appendText("Promjena: " + categorySerialization.getChangeInCategories().get(i) + "\n");
             changesTextArea.appendText("Prije promjene: " + categorySerialization.getCategoriesBeforeChange().get(i) + "\n");
             changesTextArea.appendText("Nakon promjene: " + categorySerialization.getCategoriesAfterChange().get(i) + "\n");
+            changesTextArea.appendText("Promjenio korisnik: " + categorySerialization.getRoleThatChanged().get(i) + "\n");
             changesTextArea.appendText("Vrijeme promjene: " + categorySerialization.getTimeOfChange().get(i).format(DateTimeFormatter.ofPattern(dateTimeFormatter)) + "\n");
             changesTextArea.appendText("\n");
         }
@@ -49,8 +50,8 @@ public class ShowChangesController {
             changesTextArea.appendText("Promjena: " + applianceSerialization.getChangeInAppliances().get(i) + "\n");
             changesTextArea.appendText("Prije promjene: " + applianceSerialization.getAppliancesBeforeChange().get(i) + "\n");
             changesTextArea.appendText("Nakon promjene: " + applianceSerialization.getAppliancesAfterChange().get(i) + "\n");
+            changesTextArea.appendText("Promjenio korisnik: " + applianceSerialization.getRoleThatChanged().get(i) + "\n");
             changesTextArea.appendText("Vrijeme promjene: " + applianceSerialization.getTimeOfChange().get(i).format(DateTimeFormatter.ofPattern(dateTimeFormatter)) + "\n");
-            changesTextArea.appendText("Promjenio korisnik: " + currentUser.getUsername() + "\n");
             changesTextArea.appendText("\n");
         }
     }
