@@ -63,12 +63,12 @@
                <Font size="14.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" prefWidth="75.0" text="Izbriši" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+         <Button mnemonicParsing="false" onAction="#deleteRole" prefWidth="75.0" text="Izbriši" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
             <font>
                <Font size="14.0" />
             </font>
          </Button>
-         <TextField fx:id="searchBarTextField" promptText="Traži po usernameu..." GridPane.columnIndex="1" GridPane.rowIndex="5" />
+         <TextField fx:id="searchBarTextField" onKeyPressed="#search" promptText="Traži po usernameu..." GridPane.columnIndex="1" GridPane.rowIndex="5" />
          <TableView fx:id="usersTableView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="6" GridPane.rowSpan="6">
            <columns>
              <TableColumn fx:id="roleTableColumn" prefWidth="283.0" text="Rola" />

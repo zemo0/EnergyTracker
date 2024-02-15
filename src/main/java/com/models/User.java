@@ -23,4 +23,14 @@ public class User extends Role implements Serializable {
             return new User(this);
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

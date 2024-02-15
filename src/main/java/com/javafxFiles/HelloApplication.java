@@ -20,7 +20,7 @@ import static com.mainPackage.Main.logger;
  * Na sve staviti lijepi CSS
  *
  * iskoristiti mapu negdje, genericnu listu s jednim parametrom
- * dodati tablicu u kojoj pisu svi useri za admina
+ * dodati tablicu u kojoj pisu svi useri za admina, DOVRŠI EDIT I DELETE KORISNIKA
  * preporuke za uštedu na home screenu ispisati ispod grafa
  *
  */

@@ -6,10 +6,7 @@ import com.utils.FileUtils;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 import com.models.Admin;
 import com.models.User;
@@ -70,25 +67,95 @@ public class UsersController {
     public void editRole(){
         Role selectedUser = usersTableView.getSelectionModel().getSelectedItem();
         if(selectedUser != null && rolesComboBox.getValue() != null && usernameTableColumn.getText()!=null && passwordTableColumn.getText()!=null){
-            String username = usernameTextField.getText();
-            String password = passwordTextField.getText();
-            String role = rolesComboBox.getValue();
-            if(role.equals("Administrator")){
-                Admin admin = new Admin.AdministratorBuilder().setUsername(username).setPassword(password).build();
-                Set<Role> racuni = FileUtils.dohvatPodatakaORacunima();
-                racuni.remove(selectedUser);
-                racuni.add(admin);
-                changesInRoles.add(admin);
-                zapisRacuna(racuni);
-            } else {
-                User user = new User.KorisnikBuilder().setUsername(username).setPassword(password).build();
-                Set<Role> racuni = FileUtils.dohvatPodatakaORacunima();
-                racuni.remove(selectedUser);
-                racuni.add(user);
-                changesInRoles.add(user);
-                zapisRacuna(racuni);
+            Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);//samo potvrda promjene podataka
+            confirmationDialog.setTitle("Potvrda");
+            confirmationDialog.setHeaderText("Jeste li sigurni da želite promjeniti podatke izabrane kategorije?");
+            confirmationDialog.setContentText("Stisnite OK za potvrdu");
+            confirmationDialog.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            String username = usernameTextField.getText();
+                            String password = passwordTextField.getText();
+                            String role = rolesComboBox.getValue();
+                            if (role.equals("Administrator")) {
+                                Admin admin = new Admin.AdministratorBuilder().setUsername(username).setPassword(password).build();
+                                Set<Role> racuni = FileUtils.dohvatPodatakaORacunima();
+                                racuni.remove(selectedUser);
+                                racuni.add(admin);
+                                changesInRoles.add(admin);
+                                zapisRacuna(racuni);
+                            } else {
+                                User user = new User.KorisnikBuilder().setUsername(username).setPassword(password).build();
+                                Set<Role> racuni = FileUtils.dohvatPodatakaORacunima();
+                                racuni.remove(selectedUser);
+                                racuni.add(user);
+                                changesInRoles.add(user);
+                                zapisRacuna(racuni);
+                            }
+                        }
+                    });
+        } else if(selectedUser == null){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("GREŠKA KOD UNOSA");
+            alert.setHeaderText("Niste odabrali račun");
+            alert.setContentText("Molimo vas da odaberete račun koji želite promijeniti");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("GREŠKA KOD UNOSA");
+            alert.setHeaderText("Niste unijeli podatke");
+            alert.setContentText("Molimo vas da unesete kako biste htjeli da ti podatci izgledaju");
+            alert.showAndWait();
+            logger.info("Nisu uneseni podatci za promjenu računa");
+        }
+        SerializeRacuneThread serializeRacuneThread = new SerializeRacuneThread(changesInRoles);
+        serializeRacuneThread.serializeRacune(changesInRoles);
+        if(currentUser.getRole().equals("Administrator")) {
+            Set<Role> korisnici = FileUtils.dohvatPodatakaORacunima();
+            usersTableView.getItems().clear();
+            usersTableView.getItems().addAll(korisnici);
+        }
+    }
+
+    public void deleteRole(){
+        Role selectedUser = usersTableView.getSelectionModel().getSelectedItem();
+        if(selectedUser != null){
+            Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);//samo potvrda promjene podataka
+            confirmationDialog.setTitle("Potvrda");
+            confirmationDialog.setHeaderText("Jeste li sigurni da želite obrisati izabrani račun?");
+            confirmationDialog.setContentText("Stisnite OK za potvrdu");
+            confirmationDialog.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    Set<Role> racuni = FileUtils.dohvatPodatakaORacunima();
+                    racuni.remove(selectedUser);
+                    zapisRacuna(racuni);
+                }
+            });
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("GREŠKA KOD UNOSA");
+            alert.setHeaderText("Niste odabrali račun");
+            alert.setContentText("Molimo vas da odaberete račun koji želite obrisati");
+            alert.showAndWait();
+        }
+        SerializeRacuneThread serializeRacuneThread = new SerializeRacuneThread(changesInRoles);
+        serializeRacuneThread.serializeRacune(changesInRoles);
+        if(currentUser.getRole().equals("Administrator")) {
+            Set<Role> korisnici = FileUtils.dohvatPodatakaORacunima();
+            usersTableView.getItems().clear();
+            usersTableView.getItems().addAll(korisnici);
+        }
+    }
+    public void search(){
+        String search = searchBarTextField.getText();
+        Set<Role> racuni = FileUtils.dohvatPodatakaORacunima();
+        Set<Role> filteredRacuni = new HashSet<>();
+        for(Role r : racuni){
+            if(r.getUsername().contains(search)){
+                filteredRacuni.add(r);
             }
         }
+        usersTableView.getItems().clear();
+        usersTableView.getItems().addAll(filteredRacuni);
     }
 
     public void zapisRacuna(Set<Role> racuni){

@@ -1,11 +1,8 @@
-Korisnik
-marko
+Administrator
+ivan
 qbtt
 Korisnik
 marko
-qbtt23
-Administrator
-ivan
 qbtt
 Korisnik
 tomi
