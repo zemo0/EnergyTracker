@@ -9,6 +9,8 @@ import com.utils.DatabaseUtils;
 import javafx.scene.chart.XYChart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -85,5 +87,18 @@ public class Main {
             }
         }
         return mapOfAppliances;
+    }
+    public static Map<String, Double> fillUpMapOfMaxValues(Map<String, Double> mapOfAppliances){
+        List<Appliance> appliances = DatabaseUtils.getAllAppliances();
+        Map<String, Double> mapOfDoubles = new HashMap<>();
+        for(Appliance appliance : appliances){
+            Double currentValue = mapOfDoubles.get(appliance.getApplianceCategory().getName());
+            if (currentValue == null) {
+                mapOfDoubles.put(appliance.getApplianceCategory().getName(), appliance.getTotalCostOfAppliance());
+            } else {
+                mapOfDoubles.put(appliance.getApplianceCategory().getName(), currentValue + appliance.getTotalCostOfAppliance());
+            }
+        }
+        return mapOfDoubles;
     }
 }

@@ -4,6 +4,7 @@ import com.DatabaseThreads.GetAllCategoriesThread;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 public class Appliance implements Serializable {
     private Long id;
@@ -155,6 +156,19 @@ public class Appliance implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Appliance appliance = (Appliance) o;
+        return Objects.equals(id, appliance.id) && Objects.equals(applianceCategory, appliance.applianceCategory) && Objects.equals(username, appliance.username) && Objects.equals(month, appliance.month) && Objects.equals(appliancePowerUse, appliance.appliancePowerUse) && Objects.equals(dailyUseTime, appliance.dailyUseTime) && Objects.equals(tariff, appliance.tariff) && Objects.equals(dailyConsumption, appliance.dailyConsumption) && Objects.equals(totalCostOfAppliance, appliance.totalCostOfAppliance);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, applianceCategory, username, month, appliancePowerUse, dailyUseTime, tariff, dailyConsumption, totalCostOfAppliance);
     }
 
     @Override

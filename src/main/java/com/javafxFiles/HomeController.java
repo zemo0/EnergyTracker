@@ -1,6 +1,7 @@
 package com.javafxFiles;
 
 import com.DatabaseThreads.AverageCostByMonthThread;
+import com.mainPackage.Main;
 import com.models.Appliance;
 import com.models.AverageCostPerMonth;
 import com.models.Months;
@@ -28,6 +29,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import static com.mainPackage.Main.fillUpMap;
+import static com.mainPackage.Main.fillUpMapOfMaxValues;
 
 public class HomeController implements Initializable {
     @FXML
@@ -65,6 +67,20 @@ public class HomeController implements Initializable {
             if(entry.getValue().getTotalCostOfAppliance() > averageCost) {
                 recommendationsTextArea.appendText("U " + entry.getKey() + " potrošnja je veća od prosjeka, možete idući mjesec malo odmorit od " + entry.getValue().getApplianceCategory().getName() + "\n");
             }
+        }
+
+        Map<String, Double> map = new HashMap<>(); //najveci potrosac u mjesecu je x i razlika je
+        map = fillUpMapOfMaxValues(map);
+        Double maxDouble = Double.MIN_VALUE;
+        String maxAppliance = null;
+        for (Map.Entry<String, Double> entry : map.entrySet()) {
+            if (entry.getValue() > maxDouble) {
+                maxDouble = entry.getValue();
+                maxAppliance = entry.getKey();
+            }
+        }
+        if(!DatabaseUtils.getAllAppliances().isEmpty()) {
+            recommendationsTextArea.appendText("Vaš najveći potrošač ove godine je " + maxAppliance + " i sveukupno vas je koštao " + maxDouble + "€\n");
         }
 
     }
