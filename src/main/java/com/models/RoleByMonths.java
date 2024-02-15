@@ -4,11 +4,11 @@ import com.utils.DatabaseUtils;
 
 import java.util.List;
 
-public class RoleByMonth<T extends Role, U extends List<Months>>{
+public class RoleByMonths<T extends Role, U extends List<Months>>{
     private T role;
     private U months;
 
-    public RoleByMonth(T role, U months) {
+    public RoleByMonths(T role, U months) {
         this.role = role;
         this.months = months;
     }

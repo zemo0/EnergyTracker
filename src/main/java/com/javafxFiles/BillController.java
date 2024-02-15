@@ -44,7 +44,9 @@ public class BillController {
         List<Appliance> appliances = DatabaseUtils.getAppliancesByMonth(String.valueOf(monthComboBox.getValue()));
         ObservableList<Appliance> observableApplianceList = FXCollections.observableArrayList(appliances);
         appliancesTableView.setItems(observableApplianceList);
-        String outputText = "Ukupna potrošnja za " + monthComboBox.getValue() + " je " + appliances.stream().mapToDouble(Appliance::getTotalCostOfAppliance).sum() + " eura";
+        Double totalCost = appliances.stream().mapToDouble(Appliance::getTotalCostOfAppliance).sum();
+        String formattedTotalCost = String.format("%.2f", totalCost);
+        String outputText = "Ukupna potrošnja za " + monthComboBox.getValue() + " je " + formattedTotalCost + " eura";
         outputLabel.setText(outputText);
     }
 

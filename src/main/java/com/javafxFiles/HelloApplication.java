@@ -11,18 +11,7 @@ import java.util.Objects;
 import static com.mainPackage.Main.logger;
 
 /**
- * Ideje za app:
- * Grafički prikaz potrošnje po danima, tjednima, mjesecima?
- * Personalizirane poruke za uštedu energije
- * Integracija s pametnim uređajima
- * Obavjestiti o vrhuncu
- * Pokazati potrošnju npr u količini CO2 emisije
- * Na sve staviti lijepi CSS
- *
- * iskoristiti mapu negdje, genericnu listu s jednim parametrom
- * dodati tablicu u kojoj pisu svi useri za admina, DOVRŠI EDIT I DELETE KORISNIKA
- * preporuke za uštedu na home screenu ispisati ispod grafa
- *
+ * isključit gh copilot
  */
 
 public class HelloApplication extends Application {

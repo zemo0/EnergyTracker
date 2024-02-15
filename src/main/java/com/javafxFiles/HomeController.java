@@ -2,6 +2,7 @@ package com.javafxFiles;
 
 import com.DatabaseThreads.AverageCostByMonthThread;
 import com.models.Appliance;
+import com.models.AverageCostPerMonth;
 import com.models.Months;
 import com.utils.DatabaseUtils;
 import javafx.animation.Animation;
@@ -17,15 +18,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+
+import static com.mainPackage.Main.fillUpMap;
 
 public class HomeController implements Initializable {
     @FXML
     private BarChart<String, Double> barChart;
+    @FXML
+    private TextArea recommendationsTextArea;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         XYChart.Series<String, Double> series1 = new XYChart.Series<>();
@@ -47,5 +55,17 @@ public class HomeController implements Initializable {
         }), new KeyFrame(Duration.seconds(1)));
         refreshThread.setCycleCount(Animation.INDEFINITE);
         refreshThread.play();
+
+        recommendationsTextArea.setText("Preporuke: \n");
+        Map<Months, Appliance> mapOfAppliances = new HashMap<>();
+        mapOfAppliances = fillUpMap(mapOfAppliances);
+        for(Map.Entry<Months, Appliance> entry : mapOfAppliances.entrySet()) {
+            AverageCostPerMonth<Months> averageCostPerMonth = new AverageCostPerMonth<>(entry.getKey());
+            Double averageCost = averageCostPerMonth.getAverageCostPerMonth();
+            if(entry.getValue().getTotalCostOfAppliance() > averageCost) {
+                recommendationsTextArea.appendText("U " + entry.getKey() + " potrošnja je veća od prosjeka, možete idući mjesec malo odmorit od " + entry.getValue().getApplianceCategory().getName() + "\n");
+            }
+        }
+
     }
 }

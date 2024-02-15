@@ -30,6 +30,12 @@ public class DatabaseUtils {
             throw new DatabaseConnectionException("Greška pri spajanju na bazu podataka", ex);
         }
     }
+    private static Connection closeConnection(Connection connection) throws SQLException {
+        if (connection != null) {
+            connection.close();
+        }
+        return connection;
+    }
     public static List<Category> getAllCategories(){
         List<Category> categories = new ArrayList<>();
         try(Connection connection = connectToDatabase()){

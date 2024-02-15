@@ -4,10 +4,13 @@ import com.DatabaseThreads.GetAllAppliancesThread;
 import com.DatabaseThreads.GetAllCategoriesThread;
 import com.models.Appliance;
 import com.models.Category;
+import com.models.Months;
 import com.utils.DatabaseUtils;
+import javafx.scene.chart.XYChart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Main {
@@ -36,8 +39,7 @@ public class Main {
         return category;
     }
     public static void addDuplicateAppliances(Appliance appliance){
-        GetAllAppliancesThread getAllAppliancesThread = new GetAllAppliancesThread();
-        List<Appliance> appliances = getAllAppliancesThread.getAllAppliances();
+        List<Appliance> appliances = DatabaseUtils.getAllAppliances();
         for(Appliance a : appliances){
             if(a.getApplianceCategory().getName().equals(appliance.getApplianceCategory().getName()) &&
                     a.getTariff() == appliance.getTariff() &&
@@ -71,5 +73,17 @@ public class Main {
             }
         }
         return false;
+    }
+
+    public static Map<Months, Appliance> fillUpMap(Map<Months, Appliance> mapOfAppliances){
+        List<Appliance> appliances = DatabaseUtils.getAllAppliances();
+        for(Months month : Months.values()){
+            for(Appliance appliance : appliances){
+                if(appliance.getMonth().equals(month.toString())){
+                    mapOfAppliances.put(month, appliance);
+                }
+            }
+        }
+        return mapOfAppliances;
     }
 }
